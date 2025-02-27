@@ -42,42 +42,6 @@ given a  project name ona remote linux box , i want to
 │   └── api.swagger.json
 ├── go.mod
 ├── go.sum
-└── Makefile
 ```
 
-### Core Application Files
-- `/cmd/cloud-mwitu/main.go` - Main application entry point, initializes and starts the server
 
-### Internal Components
-- `/internal/api/`
-  - `handlers/` - HTTP request handlers for each endpoint (create project, list projects, etc.)
-  - `middleware/` - Authentication and other HTTP middleware
-  - `routes.go` - Echo router configuration and endpoint definitions
-
-- `/internal/auth/auth.go` - Authentication logic and user management
-
-- `/internal/config/config.go` - Application configuration (ports, paths, environment variables)
-
-- `/internal/db/`
-  - `migrations/` - SQLite database schema migrations
-  - `sqlite.go` - Database connection and operations
-
-- `/internal/models/models.go` - Data structures for projects, users, and services
-
-- `/internal/service/`
-  - `caddy.go` - Caddy reverse proxy configuration management
-  - `port.go` - Port availability checking and allocation
-  - `systemd.go` - SystemD service management
-
-### Support Files
-- `/scripts/`
-  - `install.sh` - Installation script for setting up the application
-  - `migrations/` - Database migration scripts
-
-- `/configs/`
-  - `caddy.json` - Caddy server template configuration
-  - `systemd.service` - SystemD service template file
-
-- `/docs/api.swagger.json` - API documentation
-
-- `Makefile` - Build and development commands
