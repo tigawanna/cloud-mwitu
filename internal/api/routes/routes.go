@@ -1,11 +1,11 @@
 package routes
 
 import (
-    "github.com/labstack/echo/v4"
-    "github.com/tigawanna/cloud-mwitu/internal/api/routes/hello"
+	"github.com/go-fuego/fuego"
+	"github.com/tigawanna/cloud-mwitu/internal/api/routes/hello"
 )
 
-func RegisterRoutes(e *echo.Echo) {
+func RegisterRoutes(s *fuego.Server) {
     // Register route groups
-    hello.RegisterRoutes(e)
+    hello.RegisterRoutes(s)
 }

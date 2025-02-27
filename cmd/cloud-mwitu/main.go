@@ -1,17 +1,47 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/labstack/echo/v4"
+	"github.com/go-fuego/fuego"
 	"github.com/tigawanna/cloud-mwitu/internal/api/routes"
 )
 
-func main(){
-	e := echo.New()
-	routes.RegisterRoutes(e)
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+
+type MyInput struct {
+	Name string `json:"name" validate:"required"`
+}
+
+type MyOutput struct {
+	Message string `json:"message"`
+}
+
+
+// func myController(c fuego.ContextWithBody[MyInput]) (*MyOutput, error) {
+// 	body, err := c.Body()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &MyOutput{Message: "Hello, " + body.Name}, nil
+// }
+
+
+func main() {
+	s := fuego.NewServer(
+		fuego.WithAddr("localhost:8080"),
+		
+		fuego.WithEngineOptions(
+			fuego.WithOpenAPIConfig(
+				fuego.OpenAPIConfig{
+					PrettyFormatJSON: true,
+				},
+			),
+		))
+
+	fuego.Get(s, "/", func(c fuego.ContextNoBody) (string, error) {
+		return "Hello, World!", nil
 	})
-	e.Logger.Fatal(e.Start(":8080"))
+	// fuego.Post(s, "/user/{user}", myController)
+	routes.RegisterRoutes(s)
+
+	s.Run()
 }
