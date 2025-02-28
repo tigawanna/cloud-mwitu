@@ -24,6 +24,5 @@ func main() {
 		return "Hello, World!", nil
 	})
 	routes.RegisterRoutes(s)
-
 	s.Run()
 }
