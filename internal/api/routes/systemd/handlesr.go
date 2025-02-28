@@ -2,24 +2,15 @@ package systemd
 
 import (
 	"fmt"
-	"net/http"
+	// "net/http"
 
 	"github.com/go-fuego/fuego"
-	"github.com/tigawanna/cloud-mwitu/internal/services/systemd"
+	"github.com/tigawanna/cloud-mwitu/internal/services"
 )
 
-func GetSystemDController(c fuego.ContextNoBody) (*[]CreateSystemDModel, error) {
-	if c.Request().Method != http.MethodGet {
-		return nil, fuego.BadRequestError{
-			Title:  "Invalid ID",
-			Detail: "The provided ID is not a valid integer.",
-			Err:    nil,
-		}
-	}
-	return &[]CreateSystemDModel{
-		{ServiceName: "service 1", BaseDir: "test", ExecCommand: "test"},
-		{ServiceName: "service 2", BaseDir: "test", ExecCommand: "test"},
-	}, nil
+func GetSystemDController(c fuego.ContextNoBody) (*[]services.SystemDService, error) {	
+	services := services.GetSystemDServices("")
+	return &services, nil
 }
 func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*CreateSystemDResponseModel, error) {
 	body, err := c.Body()
@@ -30,7 +21,7 @@ func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*Create
 			Err:    err,
 		}
 	}
-	config := systemd.NewSystemdServiceConfig("my-service", "~/myapp", "myapp", nil)
+	config := services.NewSystemdServiceConfig("my-service", "~/myapp", "myapp", nil)
 	content, err := config.ToString()
 	if err != nil {
 		fmt.Println("Error generating service file:", err)

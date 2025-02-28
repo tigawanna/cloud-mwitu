@@ -110,14 +110,8 @@
 				},
 				"type": "object"
 			},
-			"Project": {
-				"description": "Project schema",
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"type": "object"
+			"SystemDService": {
+				"description": "SystemDService schema"
 			},
 			"string": {
 				"description": "string schema",
@@ -348,81 +342,6 @@
 				]
 			}
 		},
-		"/projects/": {
-			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/projects.GetProjectsController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/projects/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Project"
-									},
-									"type": "array"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Project"
-									},
-									"type": "array"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "get projects controller",
-				"tags": [
-					"projects"
-				]
-			}
-		},
 		"/sytemd/": {
 			"get": {
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
@@ -442,7 +361,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/CreateSystemDModel"
+										"$ref": "#/components/schemas/SystemDService"
 									},
 									"type": "array"
 								}
@@ -450,7 +369,7 @@
 							"application/xml": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/CreateSystemDModel"
+										"$ref": "#/components/schemas/SystemDService"
 									},
 									"type": "array"
 								}
@@ -586,9 +505,6 @@
 	"tags": [
 		{
 			"name": "hello"
-		},
-		{
-			"name": "projects"
 		},
 		{
 			"name": "sytemd"

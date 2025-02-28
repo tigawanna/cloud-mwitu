@@ -10,3 +10,7 @@ type CreateSystemDResponseModel struct {
 	ServiceFile string `json:"serviceFile"`
 	CreatedOrUpdated string `json:"createdOrUpdated"`
 }
+
+type ListSystedDServicesResponse struct {
+
+}
