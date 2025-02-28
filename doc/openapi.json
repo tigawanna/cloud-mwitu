@@ -1,6 +1,47 @@
 {
 	"components": {
 		"schemas": {
+			"CreateSystemDModel": {
+				"description": "CreateSystemDModel schema",
+				"properties": {
+					"baseDir": {
+						"type": "string"
+					},
+					"execCommand": {
+						"type": "string"
+					},
+					"serviceName": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"CreateSystemDResponseModel": {
+				"description": "CreateSystemDResponseModel schema",
+				"properties": {
+					"createSystemDModel": {
+						"properties": {
+							"baseDir": {
+								"type": "string"
+							},
+							"execCommand": {
+								"type": "string"
+							},
+							"serviceName": {
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"createdOrUpdated": {
+						"type": "string"
+					},
+					"serviceFile": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"HTTPError": {
 				"description": "HTTPError schema",
 				"properties": {
@@ -381,6 +422,159 @@
 					"projects"
 				]
 			}
+		},
+		"/sytemd/": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "GET_/sytemd/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CreateSystemDModel"
+									},
+									"type": "array"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CreateSystemDModel"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get system d controller",
+				"tags": [
+					"sytemd"
+				]
+			},
+			"post": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.MakeSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "POST_/sytemd/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateSystemDModel"
+							}
+						}
+					},
+					"description": "Request body for systemd.CreateSystemDModel",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateSystemDResponseModel"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateSystemDResponseModel"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "make system d controller",
+				"tags": [
+					"sytemd"
+				]
+			}
 		}
 	},
 	"servers": [
@@ -395,6 +589,9 @@
 		},
 		{
 			"name": "projects"
+		},
+		{
+			"name": "sytemd"
 		}
 	]
 }
