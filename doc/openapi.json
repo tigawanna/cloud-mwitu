@@ -69,8 +69,8 @@
 				},
 				"type": "object"
 			},
-			"Service": {
-				"description": "Service schema",
+			"Project": {
+				"description": "Project schema",
 				"properties": {
 					"name": {
 						"type": "string"
@@ -307,10 +307,10 @@
 				]
 			}
 		},
-		"/services/": {
+		"/projects/": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/services.GetServicesController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/services/",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/projects.GetProjectsController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "GET_/projects/",
 				"parameters": [
 					{
 						"in": "header",
@@ -326,7 +326,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Service"
+										"$ref": "#/components/schemas/Project"
 									},
 									"type": "array"
 								}
@@ -334,7 +334,7 @@
 							"application/xml": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Service"
+										"$ref": "#/components/schemas/Project"
 									},
 									"type": "array"
 								}
@@ -376,9 +376,9 @@
 						"description": ""
 					}
 				},
-				"summary": "get services controller",
+				"summary": "get projects controller",
 				"tags": [
-					"services"
+					"projects"
 				]
 			}
 		}
@@ -394,7 +394,7 @@
 			"name": "hello"
 		},
 		{
-			"name": "services"
+			"name": "projects"
 		}
 	]
 }
