@@ -1,6 +1,18 @@
 {
 	"components": {
 		"schemas": {
+			"CaddyService": {
+				"description": "CaddyService schema",
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"domain": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"CreateSystemDModel": {
 				"description": "CreateSystemDModel schema",
 				"properties": {
@@ -159,6 +171,19 @@
 				},
 				"type": "object"
 			},
+			"TextToParse": {
+				"description": "TextToParse schema",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"string": {
+				"description": "string schema",
+				"type": "string"
+			},
 			"unknown-interface": {
 				"description": "unknown-interface schema"
 			}
@@ -171,6 +196,161 @@
 	},
 	"openapi": "3.1.0",
 	"paths": {
+		"/caddy/": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "GET_/caddy/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CaddyService"
+									},
+									"type": "array"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CaddyService"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get caddy controller",
+				"tags": [
+					"caddy"
+				]
+			}
+		},
+		"/parser/": {
+			"post": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.ParseStringController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "POST_/parser/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"$ref": "#/components/schemas/TextToParse"
+							}
+						}
+					},
+					"description": "Request body for routes.TextToParse",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/string"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/string"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "parse string controller",
+				"tags": [
+					"parser"
+				]
+			}
+		},
 		"/sytemd/": {
 			"get": {
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
@@ -395,6 +575,12 @@
 		}
 	],
 	"tags": [
+		{
+			"name": "caddy"
+		},
+		{
+			"name": "parser"
+		},
 		{
 			"name": "sytemd"
 		}

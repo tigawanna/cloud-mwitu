@@ -6,4 +6,6 @@ import (
 
 func RegisterRoutes(s *fuego.Server) {
 	RegisterSystemRoutes(s)
+	RegisterCaddyRoutes(s)
+	RegisterParserRoutes(s)
 }
