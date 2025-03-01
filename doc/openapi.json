@@ -116,8 +116,40 @@
 				},
 				"type": "object"
 			},
-			"SystemDServiceSliceResponse": {
-				"description": "SystemDServiceSliceResponse schema",
+			"RunningSystemDServiceResponse": {
+				"description": "RunningSystemDServiceResponse schema",
+				"properties": {
+					"items": {
+						"items": {
+							"properties": {
+								"activeState": {
+									"type": "string"
+								},
+								"loadState": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"subState": {
+									"type": "string"
+								},
+								"unit": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"total": {
+						"type": "integer"
+					}
+				},
+				"type": "object"
+			},
+			"SystemDServiceResponse": {
+				"description": "SystemDServiceResponse schema",
 				"properties": {
 					"items": {
 						"items": {
@@ -392,12 +424,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
+									"$ref": "#/components/schemas/SystemDServiceResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
+									"$ref": "#/components/schemas/SystemDServiceResponse"
 								}
 							}
 						},
@@ -539,12 +571,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
+									"$ref": "#/components/schemas/RunningSystemDServiceResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
+									"$ref": "#/components/schemas/RunningSystemDServiceResponse"
 								}
 							}
 						},

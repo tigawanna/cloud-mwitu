@@ -9,45 +9,50 @@ import (
 )
 
 type SystemDServiceSlice = []services.SystemDService
+type RunningSystemDServiceSlice = []services.RunningSystemDService
 
-type SystemDServiceSliceResponse struct {
-	Total int                       `json:"total"`
-	Items []services.SystemDService `json:"items"`
+type SystemDServiceResponse struct {
+	Total int                 `json:"total"`
+	Items SystemDServiceSlice `json:"items"`
+}
+
+type RunningSystemDServiceResponse struct {
+	Total int                        `json:"total"`
+	Items RunningSystemDServiceSlice `json:"items"`
 }
 
 type QueryParams struct {
 	Name string `query:"name"`
 	Dir  string `query:"dir"`
 }
-type NoBody struct {
-}
 
-func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {
+
+func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceResponse, error) {
 	queryParams := QueryParams{
 		Name: c.QueryParams().Get("name"),
 		Dir:  c.QueryParams().Get("dir"),
 	}
 	servicesList := services.GetSystemDServiceFiles(queryParams.Name, queryParams.Dir == "lib")
-	return SystemDServiceSliceResponse{
+	return SystemDServiceResponse{
 		Total: len(servicesList),
 		Items: servicesList,
 	}, nil
 	// return &servicesList, nil
 }
 
-func GetRunningSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {
+func GetRunningSystemDController(c fuego.ContextNoBody) (RunningSystemDServiceResponse, error) {
 
 	queryParams := QueryParams{
 		Name: c.QueryParams().Get("name"),
-		Dir:  c.QueryParams().Get("dir"),
 	}
-	servicesList := services.GetSystemDServiceFiles(queryParams.Name, queryParams.Dir == "lib")
-	return SystemDServiceSliceResponse{
+	servicesList := services.GetRunningSystemDServices(queryParams.Name)
+	return RunningSystemDServiceResponse{
 		Total: len(servicesList),
 		Items: servicesList,
 	}, nil
 	// return &servicesList, nil
 }
+
 func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*CreateSystemDResponseModel, error) {
 	body, err := c.Body()
 	if err != nil {
