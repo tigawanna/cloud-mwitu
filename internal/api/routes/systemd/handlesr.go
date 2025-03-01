@@ -8,20 +8,44 @@ import (
 	"github.com/tigawanna/cloud-mwitu/internal/services"
 )
 
-
 type SystemDServiceSlice = []services.SystemDService
 
 type SystemDServiceSliceResponse struct {
-	Total int 	`json:"total"`
+	Total int                       `json:"total"`
 	Items []services.SystemDService `json:"items"`
 }
 
-func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {	
-	servicesList := services.GetSystemDServiceFiles("",false)
+type QueryParams struct {
+	Name string `query:"name"`
+	Dir  string `query:"dir"`
+}
+type NoBody struct {
+}
+
+func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {
+	queryParams := QueryParams{
+		Name: c.QueryParams().Get("name"),
+		Dir:  c.QueryParams().Get("dir"),
+	}
+	servicesList := services.GetSystemDServiceFiles(queryParams.Name, queryParams.Dir == "lib")
 	return SystemDServiceSliceResponse{
-		Total:   len(servicesList),
-		Items:   servicesList,
-	},nil
+		Total: len(servicesList),
+		Items: servicesList,
+	}, nil
+	// return &servicesList, nil
+}
+
+func GetRunningSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {
+
+	queryParams := QueryParams{
+		Name: c.QueryParams().Get("name"),
+		Dir:  c.QueryParams().Get("dir"),
+	}
+	servicesList := services.GetSystemDServiceFiles(queryParams.Name, queryParams.Dir == "lib")
+	return SystemDServiceSliceResponse{
+		Total: len(servicesList),
+		Items: servicesList,
+	}, nil
 	// return &servicesList, nil
 }
 func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*CreateSystemDResponseModel, error) {
@@ -33,7 +57,7 @@ func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*Create
 			Err:    err,
 		}
 	}
-	config := services.NewSystemdServiceConfig(body.ServiceName, body.BaseDir, body.ExecCommand,body.LibDir, nil)
+	config := services.NewSystemdServiceConfig(body.ServiceName, body.BaseDir, body.ExecCommand, body.LibDir, nil)
 	content, err := config.ToString()
 	if err != nil {
 		fmt.Println("Error generating service file:", err)
@@ -45,8 +69,8 @@ func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*Create
 	}
 	return &CreateSystemDResponseModel{
 		CreateSystemDModel: body,
-		ServiceFile: content,
-		CreatedOrUpdated: "created",
-		}, nil
+		ServiceFile:        content,
+		CreatedOrUpdated:   "created",
+	}, nil
 
 }

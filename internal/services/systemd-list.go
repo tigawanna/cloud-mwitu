@@ -3,7 +3,6 @@ package services
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -16,8 +15,6 @@ type RunningSystemDService struct {
 	ActiveState string `json:"activeState"`
 	SubState    string `json:"subState"`
 	LoadState   string `json:"loadState"`
-	Path        string `json:"path"`
-	ModifiedAt  string `json:"modifiedAt"`
 }
 type SystemDService struct {
 	Name        string `json:"name"`
@@ -106,19 +103,7 @@ func GetRunningSystemDServices(partialName string) []RunningSystemDService {
 		if len(fields) > 4 {
 			service.LoadState = fields[4]
 		}
-		service.Path = "/etc/systemd/system/" + service.Name
 
-		// Get file info for timestamps
-		if fileInfo, err := os.Stat(service.Path); err == nil {
-			// Note: CreatedAt is not available in Linux directly
-			// Using ModTime for both since creation time isn't reliably stored
-			fmt.Println("file mod time", fileInfo.ModTime())
-			if fileInfo.ModTime().IsZero() {
-				service.ModifiedAt = "Not available"
-			} else {
-				service.ModifiedAt = fileInfo.ModTime().Format("Jan 02 2006 15:04:05")
-			}
-		}
 
 		services = append(services, service)
 	}

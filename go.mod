@@ -3,7 +3,7 @@ module github.com/tigawanna/cloud-mwitu
 go 1.23.6
 
 require (
-	github.com/go-fuego/fuego v0.18.0
+	github.com/go-fuego/fuego v0.18.4
 	github.com/labstack/echo/v4 v4.13.3
 )
 
