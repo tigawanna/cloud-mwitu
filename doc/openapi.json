@@ -98,24 +98,6 @@
 				},
 				"type": "object"
 			},
-			"MyHello": {
-				"description": "MyHello schema",
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"MyInput": {
-				"description": "MyInput schema",
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
 			"RunningSystemDServiceResponse": {
 				"description": "RunningSystemDServiceResponse schema",
 				"properties": {
@@ -177,10 +159,6 @@
 				},
 				"type": "object"
 			},
-			"string": {
-				"description": "string schema",
-				"type": "string"
-			},
 			"unknown-interface": {
 				"description": "unknown-interface schema"
 			}
@@ -193,222 +171,9 @@
 	},
 	"openapi": "3.1.0",
 	"paths": {
-		"/": {
-			"get": {
-				"description": "#### Controller: \n\n`main.main.func1`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/string"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/string"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "func1"
-			}
-		},
-		"/hello/": {
-			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/hello.HelloGetController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/hello/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MyHello"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/MyHello"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "hello get controller",
-				"tags": [
-					"hello"
-				]
-			},
-			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/hello.HelloPostController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "POST_/hello/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"*/*": {
-							"schema": {
-								"$ref": "#/components/schemas/MyInput"
-							}
-						}
-					},
-					"description": "Request body for hello.MyInput",
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MyHello"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/MyHello"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "hello post controller",
-				"tags": [
-					"hello"
-				]
-			}
-		},
 		"/sytemd/": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
 				"operationId": "GET_/sytemd/",
 				"parameters": [
 					{
@@ -475,7 +240,7 @@
 				]
 			},
 			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.MakeSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.MakeSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
 				"operationId": "POST_/sytemd/",
 				"parameters": [
 					{
@@ -494,7 +259,7 @@
 							}
 						}
 					},
-					"description": "Request body for systemd.CreateSystemDModel",
+					"description": "Request body for routes.CreateSystemDModel",
 					"required": true
 				},
 				"responses": {
@@ -555,7 +320,7 @@
 		},
 		"/sytemd/running": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes/systemd.GetRunningSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetRunningSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
 				"operationId": "GET_/sytemd/running",
 				"parameters": [
 					{
@@ -630,9 +395,6 @@
 		}
 	],
 	"tags": [
-		{
-			"name": "hello"
-		},
 		{
 			"name": "sytemd"
 		}

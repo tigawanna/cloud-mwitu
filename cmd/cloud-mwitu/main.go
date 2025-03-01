@@ -19,10 +19,6 @@ func main() {
 				},
 			),
 		))
-
-	fuego.Get(s, "/", func(c fuego.ContextNoBody) (string, error) {
-		return "Hello, World!", nil
-	})
 	routes.RegisterRoutes(s)
 	s.Run()
 }

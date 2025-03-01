@@ -1,31 +1,23 @@
-package systemd
+package routes
 
 import (
 	"fmt"
-	// "net/http"
-
 	"github.com/go-fuego/fuego"
 	"github.com/tigawanna/cloud-mwitu/internal/services"
 )
 
-type SystemDServiceSlice = []services.SystemDService
-type RunningSystemDServiceSlice = []services.RunningSystemDService
-
-type SystemDServiceResponse struct {
-	Total int                 `json:"total"`
-	Items SystemDServiceSlice `json:"items"`
-}
-
-type RunningSystemDServiceResponse struct {
-	Total int                        `json:"total"`
-	Items RunningSystemDServiceSlice `json:"items"`
-}
 
 type QueryParams struct {
 	Name string `query:"name"`
 	Dir  string `query:"dir"`
 }
 
+type SystemDServiceSlice = []services.SystemDService
+
+type SystemDServiceResponse struct {
+	Total int                 `json:"total"`
+	Items SystemDServiceSlice `json:"items"`
+}
 
 func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceResponse, error) {
 	queryParams := QueryParams{
@@ -40,6 +32,13 @@ func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceResponse, error)
 	// return &servicesList, nil
 }
 
+type RunningSystemDServiceSlice = []services.RunningSystemDService
+
+type RunningSystemDServiceResponse struct {
+	Total int                        `json:"total"`
+	Items RunningSystemDServiceSlice `json:"items"`
+}
+
 func GetRunningSystemDController(c fuego.ContextNoBody) (RunningSystemDServiceResponse, error) {
 
 	queryParams := QueryParams{
@@ -52,6 +51,22 @@ func GetRunningSystemDController(c fuego.ContextNoBody) (RunningSystemDServiceRe
 	}, nil
 	// return &servicesList, nil
 }
+
+
+
+
+type CreateSystemDModel struct {
+	ServiceName string `json:"serviceName"`
+	BaseDir  string `json:"baseDir"`
+	ExecCommand string `json:"execCommand"`
+	LibDir	bool `json:"libDir"`
+}
+type CreateSystemDResponseModel struct {
+	CreateSystemDModel `json:"createSystemDModel"`
+	ServiceFile string `json:"serviceFile"`
+	CreatedOrUpdated string `json:"createdOrUpdated"`
+}
+
 
 func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*CreateSystemDResponseModel, error) {
 	body, err := c.Body()
