@@ -17,7 +17,7 @@ type SystemDServiceSliceResponse struct {
 }
 
 func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {	
-	servicesList := services.GetSystemDServiceFiles("",true)
+	servicesList := services.GetSystemDServiceFiles("",false)
 	return SystemDServiceSliceResponse{
 		Total:   len(servicesList),
 		Items:   servicesList,
@@ -33,7 +33,7 @@ func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*Create
 			Err:    err,
 		}
 	}
-	config := services.NewSystemdServiceConfig("my-service", "~/myapp", "myapp", nil)
+	config := services.NewSystemdServiceConfig(body.ServiceName, body.BaseDir, body.ExecCommand,body.LibDir, nil)
 	content, err := config.ToString()
 	if err != nil {
 		fmt.Println("Error generating service file:", err)

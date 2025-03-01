@@ -29,14 +29,14 @@ type SystemDService struct {
 
 
 
-func GetSystemDServiceFiles(partialName string,etc bool) []SystemDService {
+func GetSystemDServiceFiles(partialName string,libDir bool) []SystemDService {
 	services := []SystemDService{}
 	//    /etc/systemd/system/
 	var dir string
-	if etc {
-		dir = "/etc"
-	} else {
-		dir = "/lib"
+	if libDir {
+        dir = "/lib"
+        } else {
+        dir = "/etc"
 	}
 	files, err := os.ReadDir(dir + "/systemd/system/")
 	if err != nil {

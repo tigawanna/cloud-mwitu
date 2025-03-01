@@ -10,6 +10,9 @@
 					"execCommand": {
 						"type": "string"
 					},
+					"libDir": {
+						"type": "boolean"
+					},
 					"serviceName": {
 						"type": "string"
 					}
@@ -26,6 +29,9 @@
 							},
 							"execCommand": {
 								"type": "string"
+							},
+							"libDir": {
+								"type": "boolean"
 							},
 							"serviceName": {
 								"type": "string"

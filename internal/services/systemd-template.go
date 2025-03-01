@@ -73,7 +73,7 @@ ExecStart={{.Service.ExecStart}}
 WantedBy={{.Install.WantedBy}}
 `
 
-func NewSystemdServiceConfig(serviceName, baseDir, execCommand string, opts *ConfigOptions) SystemdServiceConfig {
+func NewSystemdServiceConfig(serviceName, baseDir, execCommand string,libDir bool, opts *ConfigOptions) SystemdServiceConfig {
 	// Default options
 	if opts == nil {
 		opts = &ConfigOptions{
@@ -100,8 +100,13 @@ func NewSystemdServiceConfig(serviceName, baseDir, execCommand string, opts *Con
 	// Build paths
 	logPath := filepath.Join(baseDir, "logs", "service.log")
 	execPath := filepath.Join(baseDir, execCommand)
-	savePath := filepath.Join("/lib/systemd/system", serviceName+".service")
-
+	var savePath string 
+	// /etc is the recommended location but can be overridden by passing ilbDorTrue
+	if libDir {
+		filepath.Join("/lib/systemd/system", serviceName+".service")
+	} else {
+		filepath.Join("/etc/systemd/system", serviceName+".service")
+	}
 	return SystemdServiceConfig{
 		Unit: UnitSection{
 			Description: fmt.Sprintf("%s service", serviceName),
