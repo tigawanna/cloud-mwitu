@@ -6,13 +6,10 @@ import (
 	"strings"
 )
 
-type HeaderUpConfig struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
+
 
 // ParseCaddyfile parses a Caddyfile into a slice of CaddyService structs
-func ListCaddyServices(partialName string) ([]CaddyService, error) {
+func ListCaddyServicesWithFields(partialName string) ([]CaddyService, error) {
 	caddyfile, err := os.ReadFile("/etc/caddy/Caddyfile")
 	if err != nil {
 		return nil, fmt.Errorf("failed to read Caddyfile: %v", err)
@@ -29,17 +26,15 @@ func ListCaddyServices(partialName string) ([]CaddyService, error) {
 	return services, nil
 }
 
-type RequestBody struct {
-	MaxSize string `json:"max_size"`
-}
 
-type CaddyService struct {
+
+type CaddyParsedService struct {
 	Domain  string `json:"domain"`
 	Content string `json:"content"`
 }
 
 
-func FindCaddyBlocks(input, partialName string) map[string][2]int {
+func FindCaddyBlocksWithFields(input, partialName string) map[string][2]int {
 	lines := strings.Split(input, "\n")
 	blockMap := make(map[string][2]int)
 	var currentKey string
@@ -81,7 +76,7 @@ func FindCaddyBlocks(input, partialName string) map[string][2]int {
 	return blockMap
 }
 
-func ParseCaddyBlock(blockName string, blockslice []string) CaddyService {
+func ParseCaddyBlockWithFields(blockName string, blockslice []string) CaddyService {
 	caddyService := CaddyService{}
 	caddyContent := ""
 	caddyService.Domain = blockName
