@@ -8,9 +8,21 @@ import (
 	"github.com/tigawanna/cloud-mwitu/internal/services"
 )
 
-func GetSystemDController(c fuego.ContextNoBody) (*[]services.SystemDService, error) {	
-	services := services.GetSystemDServices("")
-	return &services, nil
+
+type SystemDServiceSlice = []services.SystemDService
+
+type SystemDServiceSliceResponse struct {
+	Total int 	`json:"total"`
+	Items []services.SystemDService `json:"items"`
+}
+
+func GetSystemDController(c fuego.ContextNoBody) (SystemDServiceSliceResponse, error) {	
+	servicesList := services.GetSystemDServiceFiles("",true)
+	return SystemDServiceSliceResponse{
+		Total:   len(servicesList),
+		Items:   servicesList,
+	},nil
+	// return &servicesList, nil
 }
 func MakeSystemDController(c fuego.ContextWithBody[CreateSystemDModel]) (*CreateSystemDResponseModel, error) {
 	body, err := c.Body()

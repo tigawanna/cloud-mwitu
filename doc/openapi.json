@@ -110,8 +110,34 @@
 				},
 				"type": "object"
 			},
-			"SystemDService": {
-				"description": "SystemDService schema"
+			"SystemDServiceSliceResponse": {
+				"description": "SystemDServiceSliceResponse schema",
+				"properties": {
+					"items": {
+						"items": {
+							"properties": {
+								"contents": {
+									"type": "string"
+								},
+								"modifiedAt": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"path": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"total": {
+						"type": "integer"
+					}
+				},
+				"type": "object"
 			},
 			"string": {
 				"description": "string schema",
@@ -360,18 +386,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SystemDService"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SystemDService"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/SystemDServiceSliceResponse"
 								}
 							}
 						},

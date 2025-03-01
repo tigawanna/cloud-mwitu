@@ -1,6 +1,5 @@
 package systemd
 
-
 import (
 	"github.com/go-fuego/fuego"
 )
@@ -10,4 +9,5 @@ func RegisterRoutes(s *fuego.Server) {
 	fuego.Get(group,"/",GetSystemDController)
 	fuego.Post(group,"/",MakeSystemDController)
 }
+
 
