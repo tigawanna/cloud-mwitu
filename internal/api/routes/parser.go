@@ -16,8 +16,8 @@ func RegisterParserRoutes(s *fuego.Server) {
 type KDlString struct {
 	Text string `json:"text"`
 }
-func ParseStringController(c fuego.ContextWithBody[TextToParse]) (string, error) {
 
+func ParseStringController(c fuego.ContextWithBody[TextToParse]) (string, error) {
 	_, err := c.Body()
 	if err != nil {
 		return "", fuego.BadRequestError{
@@ -27,9 +27,6 @@ func ParseStringController(c fuego.ContextWithBody[TextToParse]) (string, error)
 		}
 	}
 
-
-
-	return  "parsed", nil
+	return "", nil
 
 }
-

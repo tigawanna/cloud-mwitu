@@ -4,6 +4,26 @@
 			"CaddyService": {
 				"description": "CaddyService schema",
 				"properties": {
+					"block": {
+						"items": {
+							"properties": {
+								"path": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								},
+								"value": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							},
+							"type": "object"
+						},
+						"type": "array"
+					},
 					"content": {
 						"type": "string"
 					},
