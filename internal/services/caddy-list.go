@@ -70,10 +70,6 @@ func FindCaddyBlocks(input, partialName string) map[string][2]int {
 		}
 	}
 
-	// Print the results
-	// for key, indices := range blockMap {
-	// 	fmt.Printf("%s: [%d, %d]\n", key, indices[0], indices[1])
-	// }
 	return blockMap
 }
 
