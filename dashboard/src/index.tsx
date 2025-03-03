@@ -6,6 +6,7 @@ import { Home } from "./pages/Home/index.jsx";
 import { NotFound } from "./pages/_404.jsx";
 import "./style.css";
 import { MutationCache, QueryClient, QueryClientProvider } from "@preact-signals/query";
+import { SiteLayout } from "./components/SiteLayout.js";
 
 
 export const queryClient = new QueryClient({
@@ -34,13 +35,15 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LocationProvider>
-        <Header />
-        <main>
-          <Router>
-            <Route path="/" component={Home} />
-            <Route default component={NotFound} />
-          </Router>
-        </main>
+        <SiteLayout>
+          {/* <Header /> */}
+          <main>
+            <Router>
+              <Route path="/" component={Home} />
+              <Route default component={NotFound} />
+            </Router>
+          </main>
+        </SiteLayout>
       </LocationProvider>
     </QueryClientProvider>
   );

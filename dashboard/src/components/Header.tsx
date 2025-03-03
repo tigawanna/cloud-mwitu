@@ -1,5 +1,5 @@
 import { useLocation } from "preact-iso";
-import { navbarroutes } from "./rputes";
+import { navbarroutes } from "./routes";
 import { AllDaisyUiThemes } from "./themes/AllDaisyUiThemes";
 
 export function Header() {

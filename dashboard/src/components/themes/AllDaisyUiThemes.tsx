@@ -46,7 +46,7 @@ export function AllDaisyUiThemes({compact}: AllDaisyUiThemesProps) {
     <select 
       value={theme}
       onChange={(e) => changeTheme(e.currentTarget.value)}
-      className="select select-bordered w-[180px]"
+      className="select select-bordered "
     >
       {allDaisyUiThems.map((thm) => (
         <option 
