@@ -7,6 +7,7 @@ import { NotFound } from "./pages/_404.jsx";
 import "./style.css";
 import { MutationCache, QueryClient, QueryClientProvider } from "@preact-signals/query";
 import { SiteLayout } from "./components/SiteLayout.js";
+import { useEffect } from "preact/hooks";
 
 
 export const queryClient = new QueryClient({
@@ -32,6 +33,9 @@ export const queryClient = new QueryClient({
 });
 
 export function App() {
+    useEffect(() => {
+      document.documentElement.dataset.style = "vertical";
+    }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <LocationProvider>
