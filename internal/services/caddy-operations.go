@@ -7,24 +7,38 @@ import (
 	"strings"
 )
 
-// ParseCaddyfile parses a Caddyfile into a slice of CaddyService structs
-func ListCaddyServices(partialName string) ([]CaddyService, error) {
+
+
+func ReadcaddyFile() (string, error) {
 	caddyfile, err := os.ReadFile("/etc/caddy/Caddyfile")
 	if err != nil {
-		return nil, fmt.Errorf("failed to read Caddyfile: %v", err)
+		return "", fmt.Errorf("failed to read Caddyfile: %v", err)
 	}
-	caddyfileContent := string(caddyfile)
+	caddyfileContent := string(caddyfile)	
+	return caddyfileContent, nil
+}
+
+// ParseCaddyfile parses a Caddyfile into a slice of CaddyService structs
+func ListCaddyServices(partialName string) ([]CaddyService, error) {
+	caddyfileContent,err := ReadcaddyFile()
+	if err != nil {
+		return nil, err
+	}
 	services := []CaddyService{}
-	blockMap := FindCaddyBlocks(caddyfileContent, partialName)
+	blockMap := FindCaddyBlocks(caddyfileContent)
 	caddyfileContentLines := strings.Split(caddyfileContent, "\n")
 	for blockName, indices := range blockMap {
 		caddyfileContentBlock := caddyfileContentLines[indices[0]:indices[1]]
 		parsedBlock := ParseCaddyBlock(caddyfileContentBlock)
-		services = append(services, CaddyService{
-			Domain: blockName,
-			Content: strings.Join(caddyfileContentBlock, "\n"),
-			Block: parsedBlock,
-		})
+		if strings.Contains(blockName, partialName) {
+			services = append(services, CaddyService{
+				Domain:  blockName,
+				Content: strings.Join(caddyfileContentBlock, "\n"),
+				Block:   parsedBlock,
+				StartEnd: indices,
+			})
+
+		}
 	}
 	return services, nil
 }
@@ -33,9 +47,10 @@ type CaddyService struct {
 	Domain  string              `json:"domain"`
 	Content string              `json:"content"`
 	Block   []CaddyServiceBlock `json:"block"`
+	StartEnd [2]int             `json:"startEnd"`
 }
 
-func FindCaddyBlocks(input, partialName string) map[string][2]int {
+func FindCaddyBlocks(input string) map[string][2]int {
 	lines := strings.Split(input, "\n")
 	blockMap := make(map[string][2]int)
 	var currentKey string
@@ -46,9 +61,6 @@ func FindCaddyBlocks(input, partialName string) map[string][2]int {
 		keyExtracted := false
 		for _, char := range line {
 			if line == "" || strings.HasPrefix(line, "#") {
-				continue
-			}
-			if partialName != "" && !strings.Contains(line, partialName) {
 				continue
 			}
 			if char == '{' {
@@ -74,8 +86,8 @@ func FindCaddyBlocks(input, partialName string) map[string][2]int {
 }
 
 type CaddyServiceBlock struct {
-	Path   []string `json:"path"`
-	Value  []string `json:"value"`
+	Path  []string `json:"path"`
+	Value []string `json:"value"`
 }
 
 func ParseCaddyBlock(lines []string) []CaddyServiceBlock {
@@ -134,22 +146,49 @@ func ParseCaddyBlock(lines []string) []CaddyServiceBlock {
 	return blocks
 }
 
-// type RequestBody struct {
-// 	MaxSize string `json:"max_size"`
-// }
+type UpdateCaddyResponse struct {
+	UpdatedBlock string `json:"updatedBlock"`
+	Content string `json:"content"`
+	ContentArrayBefore []string `json:"contentArrayBefore"`
+	ContentArray []string `json:"contentArray"`
+}
 
-// type ReverseProxy struct {
-// 	Address   string           `json:"address"`
-// 	Transport TransportConfig  `json:"transport"`
-// 	Headers   []HeaderUpConfig `json:"headers"`
-// }
+func UpdateCaddyFile(domainName, newConfig string) (UpdateCaddyResponse, error) {
+	caddyfileContent, err := ReadcaddyFile()
+	foundMatch := false
+	updateCaddyResponse := UpdateCaddyResponse{}
+	if err != nil {
+		return updateCaddyResponse, err
+	}
+	blockMap := FindCaddyBlocks(caddyfileContent)
 
-// type TransportConfig struct {
-// 	Protocol    string `json:"protocol"`
-// 	ReadTimeout string `json:"read_timeout"`
-// }
-
-// type HeaderUpConfig struct {
-// 	Name  string `json:"name"`
-// 	Value string `json:"value"`
-// }
+	caddyfileContentLines := strings.Split(caddyfileContent, "\n")
+	newConfigLines := strings.Split(newConfig, "\n")
+	for blockName, indices := range blockMap {
+		if blockName == domainName {
+			// Step 1: Get all lines before the domain block
+			beforeDomainBlock := caddyfileContentLines[:indices[0]]
+			// Step 2: Get all lines after the domain block
+			afterDomainBlock := caddyfileContentLines[indices[1]+1:]
+			// Step 3: Combine the new config lines with the lines after the domain block
+			newConfigAndAfter := append(newConfigLines, afterDomainBlock...)
+			// Step 4: Combine everything: lines before + new config + lines after
+			caddyfileContentLines := append(beforeDomainBlock, newConfigAndAfter...)
+			updateCaddyResponse.Content = strings.Join(caddyfileContentLines, "\n")
+			updateCaddyResponse.ContentArray = caddyfileContentLines
+			updateCaddyResponse.ContentArrayBefore = strings.Split(caddyfileContent, "\n")
+			updateCaddyResponse.UpdatedBlock = blockName
+			foundMatch = true
+			return updateCaddyResponse, nil
+			// return {strings.Join(caddyfileContentLines, "\n"}), nil
+		}
+	}
+	if(!foundMatch){
+		newCaddyfileContentLines := append(caddyfileContentLines, newConfigLines...)
+		updateCaddyResponse.Content = strings.Join(newCaddyfileContentLines, "\n")
+		updateCaddyResponse.ContentArray = newCaddyfileContentLines
+		updateCaddyResponse.ContentArrayBefore = strings.Split(caddyfileContent, "\n")
+		updateCaddyResponse.UpdatedBlock = domainName
+	}
+	return updateCaddyResponse, nil
+}

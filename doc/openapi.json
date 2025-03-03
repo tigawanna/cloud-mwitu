@@ -29,7 +29,8 @@
 					},
 					"domain": {
 						"type": "string"
-					}
+					},
+					"startEnd": {}
 				},
 				"type": "object"
 			},
@@ -130,6 +131,18 @@
 				},
 				"type": "object"
 			},
+			"RequestUpdateCaddyModel": {
+				"description": "RequestUpdateCaddyModel schema",
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"RunningSystemDServiceResponse": {
 				"description": "RunningSystemDServiceResponse schema",
 				"properties": {
@@ -195,6 +208,39 @@
 				"description": "TextToParse schema",
 				"properties": {
 					"text": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"UpdateCaddyModel": {
+				"description": "UpdateCaddyModel schema",
+				"properties": {
+					"content": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"UpdateCaddyResponse": {
+				"description": "UpdateCaddyResponse schema",
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"contentArray": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"contentArrayBefore": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"updatedBlock": {
 						"type": "string"
 					}
 				},
@@ -286,6 +332,164 @@
 					}
 				},
 				"summary": "get caddy controller",
+				"tags": [
+					"caddy"
+				]
+			},
+			"post": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.RequestUpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "POST_/caddy/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"$ref": "#/components/schemas/RequestUpdateCaddyModel"
+							}
+						}
+					},
+					"description": "Request body for routes.RequestUpdateCaddyModel",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaddyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaddyResponse"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "request update caddy controller",
+				"tags": [
+					"caddy"
+				]
+			}
+		},
+		"/caddy/confirm-update": {
+			"post": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.UpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "POST_/caddy/confirm-update",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaddyModel"
+							}
+						}
+					},
+					"description": "Request body for routes.UpdateCaddyModel",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaddyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaddyResponse"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "update caddy controller",
 				"tags": [
 					"caddy"
 				]
