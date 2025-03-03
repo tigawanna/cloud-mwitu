@@ -11,6 +11,9 @@ importers:
       '@preact-signals/query':
         specifier: ^2.1.1
         version: 2.1.1(@preact/signals-core@1.8.0)(@preact/signals-react@3.0.1(react@18.3.1))(@preact/signals@2.0.1(preact@10.26.4))(hotscript@1.0.13)(react@18.3.1)
+      '@preact-signals/utils':
+        specifier: ^0.23.1
+        version: 0.23.1(@preact/signals-core@1.8.0)(@preact/signals-react@3.0.1(react@18.3.1))(@preact/signals@2.0.1(preact@10.26.4))(hotscript@1.0.13)(react@18.3.1)
       '@preact/signals':
         specifier: ^2.0.1
         version: 2.0.1(preact@10.26.4)
@@ -26,6 +29,9 @@ importers:
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@18.3.1)
+      tailwind-merge:
+        specifier: ^3.0.2
+        version: 3.0.2
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
@@ -1011,6 +1017,9 @@ packages:
     resolution: {integrity: sha512-2ztBJRek8IVofG9DBJqdy2N5kulaacX30Nz7xmkYF6ale9WBVmIy6mFBchvGX7Vx/MyjBhx+Rcxqrj+dbOnQ6A==}
     engines: {node: '>=16'}
 
+  tailwind-merge@3.0.2:
+    resolution: {integrity: sha512-l7z+OYZ7mu3DTqrL88RiKrKIqO3NcpEO8V/Od04bNpvk0kiIFndGEoqfuzvj4yuhRkHKjRkII2z+KS2HfPcSxw==}
+
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
@@ -1983,6 +1992,8 @@ snapshots:
   source-map@0.7.4: {}
 
   stack-trace@1.0.0-pre2: {}
+
+  tailwind-merge@3.0.2: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@4.0.9):
     dependencies:

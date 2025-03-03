@@ -8,11 +8,13 @@
 	},
 	"dependencies": {
 		"@preact-signals/query": "^2.1.1",
+		"@preact-signals/utils": "^0.23.1",
 		"@preact/signals": "^2.0.1",
 		"@tailwindcss/vite": "^4.0.9",
 		"preact": "^10.25.3",
 		"preact-iso": "^2.9.1",
 		"react-icons": "^5.5.0",
+		"tailwind-merge": "^3.0.2",
 		"tailwindcss": "^4.0.9"
 	},
 	"devDependencies": {
