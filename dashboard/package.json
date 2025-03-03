@@ -7,12 +7,21 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@preact-signals/query": "^2.1.1",
+		"@preact/signals": "^2.0.1",
+		"@tailwindcss/vite": "^4.0.9",
 		"preact": "^10.25.3",
-		"preact-iso": "^2.9.1"
+		"preact-iso": "^2.9.1",
+		"react-icons": "^5.5.0",
+		"tailwindcss": "^4.0.9"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.9.3",
+		"daisyui": "^5.0.0",
+		"rollup-plugin-analyzer": "^4.0.0",
+		"tailwindcss-animate": "^1.0.7",
 		"typescript": "^5.8.2",
-		"vite": "^6.0.4"
+		"vite": "^6.0.4",
+		"vite-tsconfig-paths": "^5.1.4"
 	}
 }
