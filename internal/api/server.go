@@ -1,16 +1,13 @@
 package api
 
 import (
-	"net/http"
-
 	"github.com/go-fuego/fuego"
-	// controller "github.com/go-fuego/fuego/examples/petstore/controllers"
+	"github.com/go-fuego/fuego/option"
 	"github.com/tigawanna/cloud-mwitu/internal/configs"
-	controller "github.com/tigawanna/cloud-mwitu/internal/controllers"
+	"github.com/tigawanna/cloud-mwitu/internal/controllers"
 	"github.com/tigawanna/cloud-mwitu/internal/middleware"
 	"github.com/tigawanna/cloud-mwitu/internal/services"
-
-	"github.com/go-fuego/fuego/option"
+	"net/http"
 )
 
 type NoContent struct {
@@ -18,7 +15,7 @@ type NoContent struct {
 }
 
 func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
-	options = append(options, 
+	options = append(options,
 		fuego.WithAddr("localhost:"+configs.GetEnv().Port),
 		fuego.WithEngineOptions(
 			fuego.WithOpenAPIConfig(
@@ -32,14 +29,14 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 			middleware.LogMiddlewereAccess,
 		),
 		fuego.WithRouteOptions(
-		option.AddResponse(http.StatusNoContent, "No Content",
-		 fuego.Response{Type: NoContent{}}),
-	))
+			option.AddResponse(http.StatusNoContent, "No Content",
+				fuego.Response{Type: NoContent{}}),
+		))
 	s := fuego.NewServer(options...)
 
-	caddyService := services.NewCaddyFileService("/path/to/caddy/config")  
-	caddyfileResorce :=  controller.CaddyFileResources{
-		CaddyFileService:caddyService ,
+	caddyService := services.NewCaddyFileService("/path/to/caddy/config")
+	caddyfileResorce := controller.CaddyFileResources{
+		CaddyFileService: caddyService,
 	}
 	caddyfileResorce.Routes(s)
 

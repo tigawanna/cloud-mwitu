@@ -1,15 +1,6 @@
 {
 	"components": {
 		"schemas": {
-			"CaddyFileError": {
-				"description": "CaddyFileError schema",
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
 			"CaddyFileModel": {
 				"description": "CaddyFileModel schema",
 				"properties": {
@@ -146,7 +137,7 @@
 	"paths": {
 		"/caddy/": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServicesController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nFilter caddy services by name",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServices`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nList all caddyfile services and filter by name",
 				"operationId": "GET_/caddy/",
 				"parameters": [
 					{
@@ -155,35 +146,6 @@
 						"name": "X-Header",
 						"schema": {
 							"type": "string"
-						}
-					},
-					{
-						"description": "Number of items per page",
-						"in": "query",
-						"name": "per_page",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						}
-					},
-					{
-						"description": "Page number",
-						"examples": {
-							"100th page": {
-								"value": 100
-							},
-							"1st page": {
-								"value": 1
-							},
-							"42nd page": {
-								"value": 42
-							}
-						},
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"default": 1,
-							"type": "integer"
 						}
 					},
 					{
@@ -198,15 +160,6 @@
 						"schema": {
 							"nullable": true,
 							"type": "string"
-						}
-					},
-					{
-						"description": "Only get pets younger than given age in years",
-						"in": "query",
-						"name": "younger_than",
-						"schema": {
-							"default": 3,
-							"type": "integer"
 						}
 					},
 					{
@@ -315,13 +268,13 @@
 						"description": ""
 					}
 				},
-				"summary": "get caddy file services controller",
+				"summary": "get caddy file services",
 				"tags": [
 					"caddy"
 				]
 			},
 			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.updateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.updateCaddy`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nCaddyfile will be updated with matching domain record or a new one will be created",
 				"operationId": "POST_/caddy/",
 				"parameters": [
 					{
@@ -397,21 +350,6 @@
 						},
 						"description": "Bad Request _(validation or deserialization error)_"
 					},
-					"409": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CaddyFileError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/CaddyFileError"
-								}
-							}
-						},
-						"description": "Conflict: Pet with the same name already exists"
-					},
 					"500": {
 						"content": {
 							"application/json": {
@@ -431,16 +369,16 @@
 						"description": ""
 					}
 				},
-				"summary": "update caddy controller",
+				"summary": "update caddy",
 				"tags": [
 					"caddy"
 				]
 			}
 		},
-		"/caddy/all": {
+		"/caddy/{name}": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServiceByNameController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nGet all pets",
-				"operationId": "GET_/caddy/all",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServiceByName`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nGet caddyfile service by name",
+				"operationId": "GET_/caddy/:name",
 				"parameters": [
 					{
 						"description": "header description",
@@ -451,51 +389,16 @@
 						}
 					},
 					{
-						"description": "Number of items per page",
-						"in": "query",
-						"name": "per_page",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						}
-					},
-					{
-						"description": "Page number",
-						"examples": {
-							"100th page": {
-								"value": 100
-							},
-							"1st page": {
-								"value": 1
-							},
-							"42nd page": {
-								"value": 42
-							}
-						},
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"default": 1,
-							"type": "integer"
-						}
-					},
-					{
-						"description": "Name of the service",
-						"examples": {
-							"example 1": {
-								"value": "Napoleon"
-							}
-						},
-						"in": "query",
-						"name": "name",
-						"required": true,
+						"in": "header",
+						"name": "Accept",
 						"schema": {
 							"type": "string"
 						}
 					},
 					{
-						"in": "header",
-						"name": "Accept",
+						"in": "path",
+						"name": "name",
+						"required": true,
 						"schema": {
 							"type": "string"
 						}
@@ -515,19 +418,7 @@
 								}
 							}
 						},
-						"description": "OK",
-						"headers": {
-							"Content-Range": {
-								"examples": {
-									"42 caddy configs": {
-										"value": "0-10/42"
-									}
-								},
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
+						"description": "OK"
 					},
 					"204": {
 						"content": {
@@ -543,21 +434,6 @@
 							}
 						},
 						"description": "No Content"
-					},
-					"206": {
-						"description": "OK",
-						"headers": {
-							"Content-Range": {
-								"examples": {
-									"42 caddy configs": {
-										"value": "0-10/42"
-									}
-								},
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
 					},
 					"400": {
 						"content": {
@@ -593,10 +469,9 @@
 						"description": ""
 					}
 				},
-				"summary": "get caddy file service by name controller",
+				"summary": "get caddy file service by name",
 				"tags": [
-					"caddy",
-					"my-tag"
+					"caddy"
 				]
 			}
 		}
@@ -610,9 +485,6 @@
 	"tags": [
 		{
 			"name": "caddy"
-		},
-		{
-			"name": "my-tag"
 		}
 	]
 }

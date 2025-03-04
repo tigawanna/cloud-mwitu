@@ -9,8 +9,8 @@ import (
 
 // default pagination options
 var optionPagination = option.Group(
-	option.QueryInt("per_page", "Number of items per page", param.Required()),
-	option.QueryInt("page", "Page number", param.Default(1), param.Example("1st page", 1), param.Example("42nd page", 42), param.Example("100th page", 100)),
+	// option.QueryInt("perPage", "Number of items per page", param.Default(24)),
+	// option.QueryInt("page", "Page number", param.Default(1), param.Example("1st page", 1), param.Example("42nd page", 42), param.Example("100th page", 100)),
 	option.ResponseHeader("Content-Range", "Total number of caddy configs", param.StatusCodes(200, 206), param.Example("42 caddy configs", "0-10/42")),
 )
 
@@ -29,31 +29,25 @@ func (e CaddyFileError) Error() string { return e.Err.Error() }
 
 func (rs CaddyFileResources) Routes(s *fuego.Server) {
 	caddyGroup := fuego.Group(s, "/caddy", option.Header("X-Header", "header description"))
-	
-	fuego.Get(caddyGroup, "/", rs.getCaddyFileServicesController,
+
+	fuego.Get(caddyGroup, "/", rs.getCaddyFileServices,
 		optionPagination,
 		option.Query("name", "Filter by name", param.Example("caddy domain name", "localhost"), param.Nullable()),
-		option.QueryInt("younger_than", "Only get pets younger than given age in years", param.Default(3)),
-		option.Description("Filter caddy services by name"),
+		option.Description("List all caddyfile services and filter by name"),
 	)
 
-	fuego.Get(caddyGroup, "/all", rs.getCaddyFileServiceByNameController,
-		optionPagination,
-		option.Query("name", "Name of the service", param.Required(), param.Example("example 1", "Napoleon")),
-		option.Tags("my-tag"),
-		option.Description("Get all pets"),
+	fuego.Get(caddyGroup, "/{name}", rs.getCaddyFileServiceByName,
+		option.Description("Get caddyfile service by name"),
 	)
 
-	fuego.Post(caddyGroup, "/", rs.updateCaddyController,
+	fuego.Post(caddyGroup, "/", rs.updateCaddy,
 		option.DefaultStatusCode(201),
-		option.AddResponse(409, "Conflict: Pet with the same name already exists", fuego.Response{Type: CaddyFileError{}}),
+		option.Description("Caddyfile will be updated with matching domain record or a new one will be created"),
 	)
 
 }
 
-
-
-func (rs CaddyFileResources) getCaddyFileServicesController(c fuego.ContextNoBody) ([]services.CaddyFileModel, error) {
+func (rs CaddyFileResources) getCaddyFileServices(c fuego.ContextNoBody) ([]services.CaddyFileModel, error) {
 	caddies, err := rs.CaddyFileService.GetCaddyFileItems(c.QueryParam("name"))
 	if err != nil {
 		return nil, fuego.BadRequestError{
@@ -64,8 +58,8 @@ func (rs CaddyFileResources) getCaddyFileServicesController(c fuego.ContextNoBod
 	return caddies, nil
 }
 
-func (rs CaddyFileResources) getCaddyFileServiceByNameController(c fuego.ContextNoBody) (services.CaddyFileModel, error) {
-	caddies, err := rs.CaddyFileService.GetCaddyFileItemByName(c.QueryParam("name"))
+func (rs CaddyFileResources) getCaddyFileServiceByName(c fuego.ContextNoBody) (services.CaddyFileModel, error) {
+	caddies, err := rs.CaddyFileService.GetCaddyFileItemByName(c.PathParam("name"))
 	if err != nil {
 		return services.CaddyFileModel{}, fuego.BadRequestError{
 			Detail: "Issue looking up caddy services",
@@ -75,15 +69,12 @@ func (rs CaddyFileResources) getCaddyFileServiceByNameController(c fuego.Context
 	return caddies, nil
 }
 
-
 type RequestUpdateCaddyModel struct {
 	Name    string `json:"name"`
 	Content string `json:"content"`
 }
 
-
-
-func (rs CaddyFileResources) updateCaddyController(c fuego.ContextWithBody[RequestUpdateCaddyModel]) (services.UpdateCaddyResponse, error) {
+func (rs CaddyFileResources) updateCaddy(c fuego.ContextWithBody[RequestUpdateCaddyModel]) (services.UpdateCaddyResponse, error) {
 	body, err := c.Body()
 	updateCaddy := services.UpdateCaddyResponse{}
 	if err != nil {
@@ -107,9 +98,9 @@ func (rs CaddyFileResources) updateCaddyController(c fuego.ContextWithBody[Reque
 			Err:    err,
 		}
 	}
-   err = services.SaveFile("/etc/caddy/Caddyfile", body.Content)
+	err = services.SaveFile("/etc/caddy/Caddyfile", body.Content)
 	if err != nil {
-		
+
 		return updateCaddy, fuego.BadRequestError{
 			Detail: "Issue saving caddy services file",
 			Err:    err,
@@ -117,13 +108,3 @@ func (rs CaddyFileResources) updateCaddyController(c fuego.ContextWithBody[Reque
 	}
 	return caddies, nil
 }
-
-
-
-
-
-
-
-
-
-
