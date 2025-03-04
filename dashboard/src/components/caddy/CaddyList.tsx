@@ -17,9 +17,16 @@ return (
     <Suspense fallback={<CardsListSuspenseFallback />}>
       <Show when={() => query.data}>
         {(data) => (
-          <ul>
-            {data().map((item) => (
-              <li key={item.label}>{item.data}</li>
+          <ul className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {data.map((item) => (
+              <li key={item.domain} className="card bg-base-200 m-2">
+                <div className="card-content">
+                  <h3 className="card-title">{item.domain}</h3>
+                  <div className="card-body">
+                    <p>{item.content}</p>
+                  </div>
+                </div>
+              </li>
             ))}
           </ul>
         )}
@@ -30,7 +37,8 @@ return (
 }
 
 async function fetchStatistics(){
-    const res = await fetch('https://api.caddyserver.com/v2/stats');
+    const res = await fetch("http://localhost:8080/caddy");
     const data = await res.json();
+    console.log(" caddy list  === ",data);
     return data;
 }

@@ -2,6 +2,8 @@ import { Suspense } from "preact/compat";
 import preactLogo from "../../assets/preact.svg";
 import { Status } from "./Status";
 import "./style.css";
+import { CaddyList } from "@/components/caddy/CaddyList";
+import { CardsListSuspenseFallback } from "@/components/shared/CardsListSuspenseFallback";
 
 export function Home() {
   return (
@@ -13,6 +15,9 @@ export function Home() {
       <Suspense fallback={<div class="text-3xl">Loading...</div>}>
         <Status />
       </Suspense>
+          <Suspense fallback={<CardsListSuspenseFallback />}>
+      <CaddyList/>
+          </Suspense>
     </div>
   );
 }

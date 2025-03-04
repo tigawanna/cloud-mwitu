@@ -246,6 +246,15 @@
 				},
 				"type": "object"
 			},
+			"Welcome": {
+				"description": "Welcome schema",
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"string": {
 				"description": "string schema",
 				"type": "string"
@@ -262,9 +271,147 @@
 	},
 	"openapi": "3.1.0",
 	"paths": {
-		"/caddy/": {
+		"/": {
+			"get": {
+				"description": "#### Controller: \n\n`main.main.func1`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "GET_/",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Welcome"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Welcome"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "func1"
+			}
+		},
+		"/caddre": {
 			"get": {
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"operationId": "GET_/caddre",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CaddyService"
+									},
+									"type": "array"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CaddyService"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get caddy controller"
+			}
+		},
+		"/caddy/": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
 				"operationId": "GET_/caddy/",
 				"parameters": [
 					{
@@ -337,7 +484,7 @@
 				]
 			},
 			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.RequestUpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.RequestUpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
 				"operationId": "POST_/caddy/",
 				"parameters": [
 					{
@@ -417,7 +564,7 @@
 		},
 		"/caddy/confirm-update": {
 			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.UpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.UpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
 				"operationId": "POST_/caddy/confirm-update",
 				"parameters": [
 					{
