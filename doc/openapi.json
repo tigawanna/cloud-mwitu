@@ -1,8 +1,17 @@
 {
 	"components": {
 		"schemas": {
-			"CaddyService": {
-				"description": "CaddyService schema",
+			"CaddyFileError": {
+				"description": "CaddyFileError schema",
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"CaddyFileModel": {
+				"description": "CaddyFileModel schema",
 				"properties": {
 					"block": {
 						"items": {
@@ -31,53 +40,6 @@
 						"type": "string"
 					},
 					"startEnd": {}
-				},
-				"type": "object"
-			},
-			"CreateSystemDModel": {
-				"description": "CreateSystemDModel schema",
-				"properties": {
-					"baseDir": {
-						"type": "string"
-					},
-					"execCommand": {
-						"type": "string"
-					},
-					"libDir": {
-						"type": "boolean"
-					},
-					"serviceName": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"CreateSystemDResponseModel": {
-				"description": "CreateSystemDResponseModel schema",
-				"properties": {
-					"createSystemDModel": {
-						"properties": {
-							"baseDir": {
-								"type": "string"
-							},
-							"execCommand": {
-								"type": "string"
-							},
-							"libDir": {
-								"type": "boolean"
-							},
-							"serviceName": {
-								"type": "string"
-							}
-						},
-						"type": "object"
-					},
-					"createdOrUpdated": {
-						"type": "string"
-					},
-					"serviceFile": {
-						"type": "string"
-					}
 				},
 				"type": "object"
 			},
@@ -131,6 +93,9 @@
 				},
 				"type": "object"
 			},
+			"NoContent": {
+				"description": "NoContent schema"
+			},
 			"RequestUpdateCaddyModel": {
 				"description": "RequestUpdateCaddyModel schema",
 				"properties": {
@@ -138,85 +103,6 @@
 						"type": "string"
 					},
 					"name": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"RunningSystemDServiceResponse": {
-				"description": "RunningSystemDServiceResponse schema",
-				"properties": {
-					"items": {
-						"items": {
-							"properties": {
-								"activeState": {
-									"type": "string"
-								},
-								"loadState": {
-									"type": "string"
-								},
-								"name": {
-									"type": "string"
-								},
-								"subState": {
-									"type": "string"
-								},
-								"unit": {
-									"type": "string"
-								}
-							},
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"total": {
-						"type": "integer"
-					}
-				},
-				"type": "object"
-			},
-			"SystemDServiceResponse": {
-				"description": "SystemDServiceResponse schema",
-				"properties": {
-					"items": {
-						"items": {
-							"properties": {
-								"contents": {
-									"type": "string"
-								},
-								"modifiedAt": {
-									"type": "string"
-								},
-								"name": {
-									"type": "string"
-								},
-								"path": {
-									"type": "string"
-								}
-							},
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"total": {
-						"type": "integer"
-					}
-				},
-				"type": "object"
-			},
-			"TextToParse": {
-				"description": "TextToParse schema",
-				"properties": {
-					"text": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"UpdateCaddyModel": {
-				"description": "UpdateCaddyModel schema",
-				"properties": {
-					"content": {
 						"type": "string"
 					}
 				},
@@ -246,19 +132,6 @@
 				},
 				"type": "object"
 			},
-			"Welcome": {
-				"description": "Welcome schema",
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"string": {
-				"description": "string schema",
-				"type": "string"
-			},
 			"unknown-interface": {
 				"description": "unknown-interface schema"
 			}
@@ -271,150 +144,72 @@
 	},
 	"openapi": "3.1.0",
 	"paths": {
-		"/": {
-			"get": {
-				"description": "#### Controller: \n\n`main.main.func1`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Welcome"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Welcome"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "func1"
-			}
-		},
-		"/caddre": {
-			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/caddre",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/CaddyService"
-									},
-									"type": "array"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/CaddyService"
-									},
-									"type": "array"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "get caddy controller"
-			}
-		},
 		"/caddy/": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServicesController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nFilter caddy services by name",
 				"operationId": "GET_/caddy/",
 				"parameters": [
 					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "per_page",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Page number",
+						"examples": {
+							"100th page": {
+								"value": 100
+							},
+							"1st page": {
+								"value": 1
+							},
+							"42nd page": {
+								"value": 42
+							}
+						},
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"default": 1,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Filter by name",
+						"examples": {
+							"caddy domain name": {
+								"value": "localhost"
+							}
+						},
+						"in": "query",
+						"name": "name",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"description": "Only get pets younger than given age in years",
+						"in": "query",
+						"name": "younger_than",
+						"schema": {
+							"default": 3,
+							"type": "integer"
+						}
+					},
+					{
 						"in": "header",
 						"name": "Accept",
 						"schema": {
@@ -428,7 +223,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/CaddyService"
+										"$ref": "#/components/schemas/CaddyFileModel"
 									},
 									"type": "array"
 								}
@@ -436,13 +231,55 @@
 							"application/xml": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/CaddyService"
+										"$ref": "#/components/schemas/CaddyFileModel"
 									},
 									"type": "array"
 								}
 							}
 						},
-						"description": "OK"
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"206": {
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
 					},
 					"400": {
 						"content": {
@@ -478,15 +315,23 @@
 						"description": ""
 					}
 				},
-				"summary": "get caddy controller",
+				"summary": "get caddy file services controller",
 				"tags": [
 					"caddy"
 				]
 			},
 			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.RequestUpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.updateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
 				"operationId": "POST_/caddy/",
 				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "header",
 						"name": "Accept",
@@ -503,11 +348,11 @@
 							}
 						}
 					},
-					"description": "Request body for routes.RequestUpdateCaddyModel",
+					"description": "Request body for controller.RequestUpdateCaddyModel",
 					"required": true
 				},
 				"responses": {
-					"200": {
+					"201": {
 						"content": {
 							"application/json": {
 								"schema": {
@@ -520,7 +365,22 @@
 								}
 							}
 						},
-						"description": "OK"
+						"description": "Created"
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
 					},
 					"400": {
 						"content": {
@@ -537,85 +397,20 @@
 						},
 						"description": "Bad Request _(validation or deserialization error)_"
 					},
-					"500": {
+					"409": {
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
+									"$ref": "#/components/schemas/CaddyFileError"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
+									"$ref": "#/components/schemas/CaddyFileError"
 								}
 							}
 						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "request update caddy controller",
-				"tags": [
-					"caddy"
-				]
-			}
-		},
-		"/caddy/confirm-update": {
-			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.UpdateCaddyController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n- `github.com/tigawanna/cloud-mwitu/internal/middleware.CorsMiddleware`\n\n---\n\n",
-				"operationId": "POST_/caddy/confirm-update",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"*/*": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateCaddyModel"
-							}
-						}
-					},
-					"description": "Request body for routes.UpdateCaddyModel",
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateCaddyResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateCaddyResponse"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
+						"description": "Conflict: Pet with the same name already exists"
 					},
 					"500": {
 						"content": {
@@ -642,91 +437,62 @@
 				]
 			}
 		},
-		"/parser/": {
-			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.ParseStringController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "POST_/parser/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"*/*": {
-							"schema": {
-								"$ref": "#/components/schemas/TextToParse"
-							}
-						}
-					},
-					"description": "Request body for routes.TextToParse",
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/string"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/string"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "parse string controller",
-				"tags": [
-					"parser"
-				]
-			}
-		},
-		"/sytemd/": {
+		"/caddy/all": {
 			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/sytemd/",
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.CaddyFileResources.getCaddyFileServiceByNameController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nGet all pets",
+				"operationId": "GET_/caddy/all",
 				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "per_page",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Page number",
+						"examples": {
+							"100th page": {
+								"value": 100
+							},
+							"1st page": {
+								"value": 1
+							},
+							"42nd page": {
+								"value": 42
+							}
+						},
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"default": 1,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Name of the service",
+						"examples": {
+							"example 1": {
+								"value": "Napoleon"
+							}
+						},
+						"in": "query",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "header",
 						"name": "Accept",
@@ -740,16 +506,58 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceResponse"
+									"$ref": "#/components/schemas/CaddyFileModel"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemDServiceResponse"
+									"$ref": "#/components/schemas/CaddyFileModel"
 								}
 							}
 						},
-						"description": "OK"
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"206": {
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
 					},
 					"400": {
 						"content": {
@@ -785,156 +593,10 @@
 						"description": ""
 					}
 				},
-				"summary": "get system d controller",
+				"summary": "get caddy file service by name controller",
 				"tags": [
-					"sytemd"
-				]
-			},
-			"post": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.MakeSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "POST_/sytemd/",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"*/*": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateSystemDModel"
-							}
-						}
-					},
-					"description": "Request body for routes.CreateSystemDModel",
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CreateSystemDResponseModel"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/CreateSystemDResponseModel"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "make system d controller",
-				"tags": [
-					"sytemd"
-				]
-			}
-		},
-		"/sytemd/running": {
-			"get": {
-				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/api/routes.GetRunningSystemDController`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\n",
-				"operationId": "GET_/sytemd/running",
-				"parameters": [
-					{
-						"in": "header",
-						"name": "Accept",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RunningSystemDServiceResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RunningSystemDServiceResponse"
-								}
-							}
-						},
-						"description": "OK"
-					},
-					"400": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Bad Request _(validation or deserialization error)_"
-					},
-					"500": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPError"
-								}
-							}
-						},
-						"description": "Internal Server Error _(panics)_"
-					},
-					"default": {
-						"description": ""
-					}
-				},
-				"summary": "get running system d controller",
-				"tags": [
-					"sytemd"
+					"caddy",
+					"my-tag"
 				]
 			}
 		}
@@ -950,10 +612,7 @@
 			"name": "caddy"
 		},
 		{
-			"name": "parser"
-		},
-		{
-			"name": "sytemd"
+			"name": "my-tag"
 		}
 	]
 }

@@ -37,7 +37,8 @@ return (
 }
 
 async function fetchStatistics(){
-    const res = await fetch("http://localhost:8080/caddy");
+    // const res = await fetch("http://localhost:8080/caddre");
+    const res = await fetch("http://localhost:9999/pets/all?per_page=10&page=1");
     const data = await res.json();
     console.log(" caddy list  === ",data);
     return data;
