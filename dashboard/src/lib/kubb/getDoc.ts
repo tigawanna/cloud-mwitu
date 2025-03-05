@@ -7,7 +7,7 @@ async function getOpenAPiDoc() {
     if (!apiUrl) {
       throw new Error("VITE_API_URL is not defined");
     }
-    const req = await fetch(apiUrl + "/doc");
+    const req = await fetch(apiUrl + "/swagger/openapi.json");
     if (!req.ok) {
       throw new Error("Error fetching api doc: " + req.statusText);
     }

@@ -1,0 +1,1 @@
+{"description":"RunningSystemDService schema","properties":{"activeState":{"type":"string"},"loadState":{"type":"string"},"name":{"type":"string"},"subState":{"type":"string"},"unit":{"type":"string"}},"type":"object","x-readme-ref-name":"RunningSystemDService"}

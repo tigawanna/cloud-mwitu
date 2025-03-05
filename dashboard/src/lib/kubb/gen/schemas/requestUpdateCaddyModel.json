@@ -1,0 +1,1 @@
+{"description":"RequestUpdateCaddyModel schema","properties":{"content":{"type":"string"},"name":{"type":"string"}},"type":"object","x-readme-ref-name":"RequestUpdateCaddyModel"}

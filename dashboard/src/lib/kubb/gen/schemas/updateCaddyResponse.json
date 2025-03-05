@@ -1,0 +1,1 @@
+{"description":"UpdateCaddyResponse schema","properties":{"content":{"type":"string"},"contentArray":{"items":{"type":"string"},"type":"array"},"contentArrayBefore":{"items":{"type":"string"},"type":"array"},"updatedBlock":{"type":"string"}},"type":"object","x-readme-ref-name":"UpdateCaddyResponse"}

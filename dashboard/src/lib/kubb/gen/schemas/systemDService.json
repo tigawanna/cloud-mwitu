@@ -1,0 +1,1 @@
+{"description":"SystemDService schema","properties":{"contents":{"type":"string"},"modifiedAt":{"type":"string"},"name":{"type":"string"},"path":{"type":"string"}},"type":"object","x-readme-ref-name":"SystemDService"}
