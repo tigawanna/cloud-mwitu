@@ -18,7 +18,7 @@ export function CaddyList({}: CaddyListProps) {
       <Suspense fallback={<CardsListSuspenseFallback />}>
         <Show when={() => (query.data.type === "success" ? query.data.data : [])}>
           {(data) => (
-            <ul className="grid p-5 grid-cols-1  xl:grid-cols-3 gap-4 overflow-auto">
+            <ul className="grid p-5 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto">
               {data.map((item) => (
                 <li key={item.domain} className="card bg-base-200 m-2">
                   <div className="card-content border-[1px] border-primary/20 rounded-2xl shadow-sm shadow-base-300">
