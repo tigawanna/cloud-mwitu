@@ -8,6 +8,7 @@ import "./style.css";
 import { MutationCache, QueryClient, QueryClientProvider } from "@preact-signals/query";
 import { SiteLayout } from "./components/SiteLayout.js";
 import { useEffect } from "preact/hooks";
+import { CaddyPage } from "./pages/Caddy/CaddyPage.js";
 
 
 export const queryClient = new QueryClient({
@@ -40,10 +41,10 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <LocationProvider>
         <SiteLayout>
-          {/* <Header /> */}
           <main>
             <Router>
               <Route path="/" component={Home} />
+              <Route path="/caddy" component={CaddyPage} />
               <Route default component={NotFound} />
             </Router>
           </main>

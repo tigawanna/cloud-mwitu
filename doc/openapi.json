@@ -196,14 +196,6 @@
 				"operationId": "GET_/caddy/",
 				"parameters": [
 					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
 						"description": "Filter by name",
 						"examples": {
 							"caddy domain name": {
@@ -333,14 +325,6 @@
 				"operationId": "POST_/caddy/",
 				"parameters": [
 					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
 						"in": "header",
 						"name": "Accept",
 						"schema": {
@@ -436,14 +420,6 @@
 				"operationId": "GET_/caddy/:name",
 				"parameters": [
 					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
 						"in": "header",
 						"name": "Accept",
 						"schema": {
@@ -535,14 +511,6 @@
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getSystemDFileServices`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nList all SystemDFile services and filter by name",
 				"operationId": "GET_/systemd/",
 				"parameters": [
-					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"description": "Filter by name",
 						"examples": {
@@ -687,14 +655,6 @@
 				"operationId": "POST_/systemd/",
 				"parameters": [
 					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
 						"in": "header",
 						"name": "Accept",
 						"schema": {
@@ -789,14 +749,6 @@
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getRunningSystemDFileServices`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nList all Running SystemDFile services and filter by name",
 				"operationId": "GET_/systemd/running",
 				"parameters": [
-					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"description": "Filter by name",
 						"examples": {
@@ -942,14 +894,6 @@
 				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getSystemDFileServiceByName`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nGet SystemDFile service by name",
 				"operationId": "GET_/systemd/:name",
 				"parameters": [
-					{
-						"description": "header description",
-						"in": "header",
-						"name": "X-Header",
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"description": "look under /lib or /etc",
 						"examples": {

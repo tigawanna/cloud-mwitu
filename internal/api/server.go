@@ -25,8 +25,8 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 			),
 		),
 		fuego.WithGlobalMiddlewares(
-			middleware.CorsMiddleware,
 			middleware.LogMiddlewereAccess,
+			middleware.CorsMiddleware,
 		),
 		fuego.WithRouteOptions(
 			option.AddResponse(http.StatusNoContent, "No Content",

@@ -28,7 +28,7 @@ var _ error = CaddyFileError{}
 func (e CaddyFileError) Error() string { return e.Err.Error() }
 
 func (rs CaddyFileResources) Routes(s *fuego.Server) {
-	caddyGroup := fuego.Group(s, "/caddy", option.Header("X-Header", "header description"))
+	caddyGroup := fuego.Group(s, "/caddy")
 
 	fuego.Get(caddyGroup, "/", rs.getCaddyFileServices,
 		optionPagination,

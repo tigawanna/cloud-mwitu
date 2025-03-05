@@ -1,8 +1,10 @@
+import "dotenv/config";
 import { defineConfig } from "@kubb/core";
 import { pluginZod } from "@kubb/plugin-zod";
 import { pluginOas } from "@kubb/plugin-oas";
 import { pluginTs } from "@kubb/plugin-ts";
 import { pluginClient } from "@kubb/plugin-client";
+import { envVariables } from "./src/lib/env";
 
 export default defineConfig(() => {
   return {
@@ -47,6 +49,9 @@ export default defineConfig(() => {
           },
         },
         importPath: "@/lib/kubb/custom-fetch-client.ts",
+        // baseURL: envVariables.VITE_API_URL,
+        // baseURL:process.env.VITE_API_URL,
+        // baseURL:"http://localhost:8080",
         operations: true,
         parser: "client",
         exclude: [

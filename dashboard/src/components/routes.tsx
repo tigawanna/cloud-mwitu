@@ -7,6 +7,11 @@ export const navbarroutes = [
     icon: CiHome,
   },
   {
+    name: "Caddy",
+    path: "/caddy",
+    icon: CiHome,
+  },
+  {
     name: "404",
     path: "/404",
     icon: TbError404,
