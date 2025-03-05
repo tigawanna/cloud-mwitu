@@ -73,7 +73,7 @@ ExecStart={{.Service.ExecStart}}
 WantedBy={{.Install.WantedBy}}
 `
 
-func NewSystemdServiceConfig(serviceName, baseDir, execCommand string,libDir bool, opts *ConfigOptions) SystemdServiceConfig {
+func (s *SystemDFileServiceImpl) NewSystemdFileConfig(serviceName, baseDir, execCommand string, libDir bool, opts *ConfigOptions) (SystemdServiceConfig, error) {
 	// Default options
 	if opts == nil {
 		opts = &ConfigOptions{
@@ -100,14 +100,15 @@ func NewSystemdServiceConfig(serviceName, baseDir, execCommand string,libDir boo
 	// Build paths
 	logPath := filepath.Join(baseDir, "logs", "service.log")
 	execPath := filepath.Join(baseDir, execCommand)
-	var savePath string 
+	var savePath string
 	// /etc is the recommended location but can be overridden by passing ilbDorTrue
 	if libDir {
 		filepath.Join("/lib/systemd/system", serviceName+".service")
 	} else {
 		filepath.Join("/etc/systemd/system", serviceName+".service")
 	}
-	return SystemdServiceConfig{
+
+	systemdFileConfig := SystemdServiceConfig{
 		Unit: UnitSection{
 			Description: fmt.Sprintf("%s service", serviceName),
 		},
@@ -127,6 +128,20 @@ func NewSystemdServiceConfig(serviceName, baseDir, execCommand string,libDir boo
 		},
 		Path: savePath,
 	}
+
+	systemdFileConfigString, err := systemdFileConfig.ToString()
+
+	if err != nil {
+		return systemdFileConfig, err
+	}
+
+	err = SaveFile(savePath, systemdFileConfigString)
+
+	if err != nil {
+		return systemdFileConfig, err
+	}
+
+	return systemdFileConfig, nil
 }
 
 func (c SystemdServiceConfig) ToString() (string, error) {
@@ -143,4 +158,38 @@ func (c SystemdServiceConfig) ToString() (string, error) {
 	}
 
 	return sb.String(), nil
+}
+
+func (s *SystemDFileServiceImpl) UpdateSystemDFile(path string, newService SystemdServiceConfig, libDir bool) (SystemdServiceConfig, error) {
+
+	// Expand home directory if path starts with ~
+	if strings.HasPrefix(path, "~/") {
+		homeDir, err := os.UserHomeDir()
+		if err == nil {
+			path = filepath.Join(homeDir, path[2:])
+		}
+	}
+
+	// Ensure base directory is absolute
+	path, _ = filepath.Abs(path)
+
+	// Build paths
+	if libDir {
+		path = filepath.Join("/lib/systemd/system", path)
+	} else {
+		path = filepath.Join("/etc/systemd/system", path)
+	}
+
+	newServiceString,err := newService.ToString()
+
+	if err != nil {
+		return newService, fmt.Errorf("failed to write service file: %w", err)
+	}
+	// Write the new service file
+	err = SaveFile(path, newServiceString)
+	if err != nil {
+		return newService, fmt.Errorf("failed to write service file: %w", err)
+	}
+
+	return newService, nil
 }

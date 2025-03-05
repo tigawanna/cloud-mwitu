@@ -38,7 +38,13 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 	caddyfileResorce := controller.CaddyFileResources{
 		CaddyFileService: caddyService,
 	}
+	//  caddy endpoints
 	caddyfileResorce.Routes(s)
+	// systemd endpoints
+	systemDResource := controller.SystemDFileResources{
+		SystemDFileService: services.NewSystemDFileService(),
+	}
+	systemDResource.Routes(s)
 
 	return s
 }

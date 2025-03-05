@@ -99,6 +99,61 @@
 				},
 				"type": "object"
 			},
+			"RequestUpdateSystemDModel": {
+				"description": "RequestUpdateSystemDModel schema",
+				"properties": {
+					"content": {},
+					"libDir": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"RunningSystemDService": {
+				"description": "RunningSystemDService schema",
+				"properties": {
+					"activeState": {
+						"type": "string"
+					},
+					"loadState": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"subState": {
+						"type": "string"
+					},
+					"unit": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"SystemDService": {
+				"description": "SystemDService schema",
+				"properties": {
+					"contents": {
+						"type": "string"
+					},
+					"modifiedAt": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"path": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"SystemdServiceConfig": {
+				"description": "SystemdServiceConfig schema"
+			},
 			"UpdateCaddyResponse": {
 				"description": "UpdateCaddyResponse schema",
 				"properties": {
@@ -474,6 +529,527 @@
 					"caddy"
 				]
 			}
+		},
+		"/systemd/": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getSystemDFileServices`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nList all SystemDFile services and filter by name",
+				"operationId": "GET_/systemd/",
+				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Filter by name",
+						"examples": {
+							"systemd domain name": {
+								"value": "caddy"
+							}
+						},
+						"in": "query",
+						"name": "name",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"description": "look under /lib or /etc",
+						"examples": {
+							"systemd directory to look under": {
+								"value": "/lib"
+							}
+						},
+						"in": "query",
+						"name": "libDir",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SystemDService"
+									},
+									"type": "array"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SystemDService"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"206": {
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get system d file services",
+				"tags": [
+					"systemd"
+				]
+			},
+			"post": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.updateSystemD`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nSystemDFile will be updated with matching domain record or a new one will be created",
+				"operationId": "POST_/systemd/",
+				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"$ref": "#/components/schemas/RequestUpdateSystemDModel"
+							}
+						}
+					},
+					"description": "Request body for controller.RequestUpdateSystemDModel",
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SystemdServiceConfig"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SystemdServiceConfig"
+								}
+							}
+						},
+						"description": "Created"
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "update system d",
+				"tags": [
+					"systemd"
+				]
+			}
+		},
+		"/systemd/running": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getRunningSystemDFileServices`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nList all Running SystemDFile services and filter by name",
+				"operationId": "GET_/systemd/running",
+				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Filter by name",
+						"examples": {
+							"systemd domain name": {
+								"value": "postgres"
+							}
+						},
+						"in": "query",
+						"name": "name",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"description": "look under /lib or /etc",
+						"examples": {
+							"systemd directory to look under": {
+								"value": "/lib"
+							}
+						},
+						"in": "query",
+						"name": "libDir",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RunningSystemDService"
+									},
+									"type": "array"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RunningSystemDService"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"206": {
+						"description": "OK",
+						"headers": {
+							"Content-Range": {
+								"examples": {
+									"42 caddy configs": {
+										"value": "0-10/42"
+									}
+								},
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get running system d file services",
+				"tags": [
+					"systemd"
+				]
+			}
+		},
+		"/systemd/{name}": {
+			"get": {
+				"description": "#### Controller: \n\n`github.com/tigawanna/cloud-mwitu/internal/controllers.SystemDFileResources.getSystemDFileServiceByName`\n\n#### Middlewares:\n\n- `github.com/go-fuego/fuego.defaultLogger.middleware`\n\n---\n\nGet SystemDFile service by name",
+				"operationId": "GET_/systemd/:name",
+				"parameters": [
+					{
+						"description": "header description",
+						"in": "header",
+						"name": "X-Header",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "look under /lib or /etc",
+						"examples": {
+							"systemd directory to look under": {
+								"value": "/lib"
+							}
+						},
+						"in": "query",
+						"name": "libDir",
+						"schema": {
+							"nullable": true,
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "Accept",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SystemDService"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SystemDService"
+								}
+							}
+						},
+						"description": "OK"
+					},
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/NoContent"
+								}
+							}
+						},
+						"description": "No Content"
+					},
+					"400": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Bad Request _(validation or deserialization error)_"
+					},
+					"500": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPError"
+								}
+							}
+						},
+						"description": "Internal Server Error _(panics)_"
+					},
+					"default": {
+						"description": ""
+					}
+				},
+				"summary": "get system d file service by name",
+				"tags": [
+					"systemd"
+				]
+			}
 		}
 	},
 	"servers": [
@@ -485,6 +1061,9 @@
 	"tags": [
 		{
 			"name": "caddy"
+		},
+		{
+			"name": "systemd"
 		}
 	]
 }
