@@ -2,8 +2,6 @@ export type {
   GETCaddyQueryParams,
   GETCaddyHeaderParams,
   GETCaddy200,
-  GETCaddy204,
-  GETCaddy206,
   GETCaddy400,
   GETCaddy500,
   GETCaddyError,
@@ -14,7 +12,6 @@ export type {
   GETCaddyNamePathParams,
   GETCaddyNameHeaderParams,
   GETCaddyName200,
-  GETCaddyName204,
   GETCaddyName400,
   GETCaddyName500,
   GETCaddyNameError,
@@ -24,7 +21,6 @@ export type {
 export type {
   POSTCaddyHeaderParams,
   POSTCaddy201,
-  POSTCaddy204,
   POSTCaddy400,
   POSTCaddy500,
   POSTCaddyError,
@@ -36,8 +32,6 @@ export type {
   GETSystemdQueryParams,
   GETSystemdHeaderParams,
   GETSystemd200,
-  GETSystemd204,
-  GETSystemd206,
   GETSystemd400,
   GETSystemd500,
   GETSystemdError,
@@ -49,7 +43,6 @@ export type {
   GETSystemdNameQueryParams,
   GETSystemdNameHeaderParams,
   GETSystemdName200,
-  GETSystemdName204,
   GETSystemdName400,
   GETSystemdName500,
   GETSystemdNameError,
@@ -60,8 +53,6 @@ export type {
   GETSystemdRunningQueryParams,
   GETSystemdRunningHeaderParams,
   GETSystemdRunning200,
-  GETSystemdRunning204,
-  GETSystemdRunning206,
   GETSystemdRunning400,
   GETSystemdRunning500,
   GETSystemdRunningError,
@@ -71,7 +62,6 @@ export type {
 export type {
   POSTSystemdHeaderParams,
   POSTSystemd201,
-  POSTSystemd204,
   POSTSystemd400,
   POSTSystemd500,
   POSTSystemdError,
@@ -81,7 +71,6 @@ export type {
 } from "./types/'systemdController/POSTsystemd.ts"
 export type { CaddyFileModel } from './types/CaddyFileModel.ts'
 export type { HTTPError } from './types/HTTPError.ts'
-export type { NoContent } from './types/NoContent.ts'
 export type { RequestUpdateCaddyModel } from './types/RequestUpdateCaddyModel.ts'
 export type { RequestUpdateSystemDModel } from './types/RequestUpdateSystemDModel.ts'
 export type { RunningSystemDService } from './types/RunningSystemDService.ts'
@@ -104,7 +93,6 @@ export {
   GETCaddyNamePathParamsSchema,
   GETCaddyNameHeaderParamsSchema,
   GETCaddyName200Schema,
-  GETCaddyName204Schema,
   GETCaddyName400Schema,
   GETCaddyName500Schema,
   GETCaddyNameErrorSchema,
@@ -114,8 +102,6 @@ export {
   GETCaddyQueryParamsSchema,
   GETCaddyHeaderParamsSchema,
   GETCaddy200Schema,
-  GETCaddy204Schema,
-  GETCaddy206Schema,
   GETCaddy400Schema,
   GETCaddy500Schema,
   GETCaddyErrorSchema,
@@ -124,7 +110,6 @@ export {
 export {
   POSTCaddyHeaderParamsSchema,
   POSTCaddy201Schema,
-  POSTCaddy204Schema,
   POSTCaddy400Schema,
   POSTCaddy500Schema,
   POSTCaddyErrorSchema,
@@ -132,7 +117,6 @@ export {
   POSTCaddyMutationResponseSchema,
 } from './zod/caddySchemas/POSTcaddySchema.ts'
 export { HTTPErrorSchema } from './zod/HTTPErrorSchema.ts'
-export { noContentSchema } from './zod/noContentSchema.ts'
 export { requestUpdateCaddyModelSchema } from './zod/requestUpdateCaddyModelSchema.ts'
 export { requestUpdateSystemDModelSchema } from './zod/requestUpdateSystemDModelSchema.ts'
 export { runningSystemDServiceSchema } from './zod/runningSystemDServiceSchema.ts'
@@ -141,7 +125,6 @@ export {
   GETSystemdNameQueryParamsSchema,
   GETSystemdNameHeaderParamsSchema,
   GETSystemdName200Schema,
-  GETSystemdName204Schema,
   GETSystemdName400Schema,
   GETSystemdName500Schema,
   GETSystemdNameErrorSchema,
@@ -151,8 +134,6 @@ export {
   GETSystemdRunningQueryParamsSchema,
   GETSystemdRunningHeaderParamsSchema,
   GETSystemdRunning200Schema,
-  GETSystemdRunning204Schema,
-  GETSystemdRunning206Schema,
   GETSystemdRunning400Schema,
   GETSystemdRunning500Schema,
   GETSystemdRunningErrorSchema,
@@ -162,8 +143,6 @@ export {
   GETSystemdQueryParamsSchema,
   GETSystemdHeaderParamsSchema,
   GETSystemd200Schema,
-  GETSystemd204Schema,
-  GETSystemd206Schema,
   GETSystemd400Schema,
   GETSystemd500Schema,
   GETSystemdErrorSchema,
@@ -172,7 +151,6 @@ export {
 export {
   POSTSystemdHeaderParamsSchema,
   POSTSystemd201Schema,
-  POSTSystemd204Schema,
   POSTSystemd400Schema,
   POSTSystemd500Schema,
   POSTSystemdErrorSchema,

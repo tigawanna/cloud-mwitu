@@ -2,47 +2,42 @@ import { useQuery$ } from "@preact-signals/query";
 import { Suspense } from "preact/compat";
 import { Show, For } from "@preact-signals/utils/components";
 import { CardsListSuspenseFallback } from "../../components/shared/CardsListSuspenseFallback";
-import { caddyService, systemdService } from "@/lib/kubb/gen";
-interface CaddyListProps {
+import { caddyService } from "@/lib/kubb/gen";
+import { RecursiveCaddyConfig } from "./RecursiveCaddyConfig";
+interface CaddyListProps {}
 
-}
+export function CaddyList({}: CaddyListProps) {
+  const query = useQuery$(() => ({
+    queryKey: ["caddy"],
+    queryFn: fetchStatistics,
+    suspense: true,
+  }));
 
-export function CaddyList({}:CaddyListProps){
-    const query = useQuery$(() => ({
-      queryKey: ["caddy"],
-      queryFn: fetchStatistics,
-      suspense: true,
-    }));
-  const data = query.data.data
-
-
-return (
-  <div className="w-full h-full flex flex-col items-center justify-center">
-    <Suspense fallback={<CardsListSuspenseFallback />}>
-      <Show when={() => query.data.data}>
-        {(data) => (
-          <ul className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {data.map((item) => (
-              <li key={item.domain} className="card bg-base-200 m-2">
-                <div className="card-content">
-                  <h3 className="card-title">{item.domain}</h3>
-                  <div className="card-body">
-                    <p>{item.content}</p>
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      <Suspense fallback={<CardsListSuspenseFallback />}>
+        <Show when={() => (query.data.type === "success" ? query.data.data : [])}>
+          {(data) => (
+            <ul className="grid p-5 grid-cols-1  xl:grid-cols-3 gap-4 overflow-auto">
+              {data.map((item) => (
+                <li key={item.domain} className="card bg-base-200 m-2">
+                  <div className="card-content border-[1px] border-primary/20 rounded-2xl shadow-sm shadow-base-300">
+                    <div className="card-body">
+                      <RecursiveCaddyConfig configData={item.block || []} domain={item.domain} />
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Show>
-    </Suspense>
-  </div>
-);
+                </li>
+              ))}
+            </ul>
+          )}
+        </Show>
+      </Suspense>
+    </div>
+  );
 }
 
-
-async function fetchStatistics(){
-  return caddyService().GETcaddyClient()
+async function fetchStatistics() {
+  return caddyService().GETcaddyClient();
 }
 // async function fetchStatistics(){
 //   const res2 = await fetch("http://localhost:8080/caddy/");

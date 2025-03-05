@@ -5,4 +5,9 @@ import { z } from 'zod'
 /**
  * @description NoContent schema
  */
-export const noContentSchema = z.unknown() as unknown as ToZod<NoContent>
+export const noContentSchema = z
+  .object({
+    error: z.string().optional(),
+    result: z.string().optional(),
+  })
+  .describe('NoContent schema') as unknown as ToZod<NoContent>

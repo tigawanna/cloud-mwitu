@@ -1,5 +1,4 @@
 import type { HTTPError } from '../HTTPError.ts'
-import type { NoContent } from '../NoContent.ts'
 import type { RunningSystemDService } from '../RunningSystemDService.ts'
 
 export type GETSystemdRunningQueryParams = {
@@ -17,11 +16,6 @@ export type GETSystemdRunningQueryParams = {
 
 export type GETSystemdRunningHeaderParams = {
   /**
-   * @description header description
-   * @type string | undefined
-   */
-  'X-Header'?: string | undefined
-  /**
    * @type string | undefined
    */
   Accept?: string | undefined
@@ -31,16 +25,6 @@ export type GETSystemdRunningHeaderParams = {
  * @description OK
  */
 export type GETSystemdRunning200 = RunningSystemDService[]
-
-/**
- * @description No Content
- */
-export type GETSystemdRunning204 = NoContent
-
-/**
- * @description OK
- */
-export type GETSystemdRunning206 = unknown
 
 /**
  * @description Bad Request _(validation or deserialization error)_
@@ -54,10 +38,10 @@ export type GETSystemdRunning500 = HTTPError
 
 export type GETSystemdRunningError = unknown
 
-export type GETSystemdRunningQueryResponse = GETSystemdRunning200 | GETSystemdRunning204 | GETSystemdRunning206
+export type GETSystemdRunningQueryResponse = GETSystemdRunning200
 
 export type GETsystemdrunningQuery = {
-  Response: GETSystemdRunning200 | GETSystemdRunning204 | GETSystemdRunning206
+  Response: GETSystemdRunning200
   QueryParams: GETSystemdRunningQueryParams
   HeaderParams: GETSystemdRunningHeaderParams
   Errors: GETSystemdRunning400 | GETSystemdRunning500

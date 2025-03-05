@@ -3,7 +3,6 @@ export {
   GETCaddyNamePathParamsSchema,
   GETCaddyNameHeaderParamsSchema,
   GETCaddyName200Schema,
-  GETCaddyName204Schema,
   GETCaddyName400Schema,
   GETCaddyName500Schema,
   GETCaddyNameErrorSchema,
@@ -13,8 +12,6 @@ export {
   GETCaddyQueryParamsSchema,
   GETCaddyHeaderParamsSchema,
   GETCaddy200Schema,
-  GETCaddy204Schema,
-  GETCaddy206Schema,
   GETCaddy400Schema,
   GETCaddy500Schema,
   GETCaddyErrorSchema,
@@ -23,7 +20,6 @@ export {
 export {
   POSTCaddyHeaderParamsSchema,
   POSTCaddy201Schema,
-  POSTCaddy204Schema,
   POSTCaddy400Schema,
   POSTCaddy500Schema,
   POSTCaddyErrorSchema,
@@ -31,7 +27,6 @@ export {
   POSTCaddyMutationResponseSchema,
 } from './caddySchemas/POSTcaddySchema.ts'
 export { HTTPErrorSchema } from './HTTPErrorSchema.ts'
-export { noContentSchema } from './noContentSchema.ts'
 export { requestUpdateCaddyModelSchema } from './requestUpdateCaddyModelSchema.ts'
 export { requestUpdateSystemDModelSchema } from './requestUpdateSystemDModelSchema.ts'
 export { runningSystemDServiceSchema } from './runningSystemDServiceSchema.ts'
@@ -40,7 +35,6 @@ export {
   GETSystemdNameQueryParamsSchema,
   GETSystemdNameHeaderParamsSchema,
   GETSystemdName200Schema,
-  GETSystemdName204Schema,
   GETSystemdName400Schema,
   GETSystemdName500Schema,
   GETSystemdNameErrorSchema,
@@ -50,8 +44,6 @@ export {
   GETSystemdRunningQueryParamsSchema,
   GETSystemdRunningHeaderParamsSchema,
   GETSystemdRunning200Schema,
-  GETSystemdRunning204Schema,
-  GETSystemdRunning206Schema,
   GETSystemdRunning400Schema,
   GETSystemdRunning500Schema,
   GETSystemdRunningErrorSchema,
@@ -61,8 +53,6 @@ export {
   GETSystemdQueryParamsSchema,
   GETSystemdHeaderParamsSchema,
   GETSystemd200Schema,
-  GETSystemd204Schema,
-  GETSystemd206Schema,
   GETSystemd400Schema,
   GETSystemd500Schema,
   GETSystemdErrorSchema,
@@ -71,7 +61,6 @@ export {
 export {
   POSTSystemdHeaderParamsSchema,
   POSTSystemd201Schema,
-  POSTSystemd204Schema,
   POSTSystemd400Schema,
   POSTSystemd500Schema,
   POSTSystemdErrorSchema,

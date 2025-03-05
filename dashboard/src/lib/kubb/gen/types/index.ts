@@ -2,8 +2,6 @@ export type {
   GETCaddyQueryParams,
   GETCaddyHeaderParams,
   GETCaddy200,
-  GETCaddy204,
-  GETCaddy206,
   GETCaddy400,
   GETCaddy500,
   GETCaddyError,
@@ -14,7 +12,6 @@ export type {
   GETCaddyNamePathParams,
   GETCaddyNameHeaderParams,
   GETCaddyName200,
-  GETCaddyName204,
   GETCaddyName400,
   GETCaddyName500,
   GETCaddyNameError,
@@ -24,7 +21,6 @@ export type {
 export type {
   POSTCaddyHeaderParams,
   POSTCaddy201,
-  POSTCaddy204,
   POSTCaddy400,
   POSTCaddy500,
   POSTCaddyError,
@@ -36,8 +32,6 @@ export type {
   GETSystemdQueryParams,
   GETSystemdHeaderParams,
   GETSystemd200,
-  GETSystemd204,
-  GETSystemd206,
   GETSystemd400,
   GETSystemd500,
   GETSystemdError,
@@ -49,7 +43,6 @@ export type {
   GETSystemdNameQueryParams,
   GETSystemdNameHeaderParams,
   GETSystemdName200,
-  GETSystemdName204,
   GETSystemdName400,
   GETSystemdName500,
   GETSystemdNameError,
@@ -60,8 +53,6 @@ export type {
   GETSystemdRunningQueryParams,
   GETSystemdRunningHeaderParams,
   GETSystemdRunning200,
-  GETSystemdRunning204,
-  GETSystemdRunning206,
   GETSystemdRunning400,
   GETSystemdRunning500,
   GETSystemdRunningError,
@@ -71,7 +62,6 @@ export type {
 export type {
   POSTSystemdHeaderParams,
   POSTSystemd201,
-  POSTSystemd204,
   POSTSystemd400,
   POSTSystemd500,
   POSTSystemdError,
@@ -81,7 +71,6 @@ export type {
 } from "./'systemdController/POSTsystemd.ts"
 export type { CaddyFileModel } from './CaddyFileModel.ts'
 export type { HTTPError } from './HTTPError.ts'
-export type { NoContent } from './NoContent.ts'
 export type { RequestUpdateCaddyModel } from './RequestUpdateCaddyModel.ts'
 export type { RequestUpdateSystemDModel } from './RequestUpdateSystemDModel.ts'
 export type { RunningSystemDService } from './RunningSystemDService.ts'

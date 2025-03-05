@@ -2,17 +2,18 @@ package api
 
 import (
 	"github.com/go-fuego/fuego"
-	"github.com/go-fuego/fuego/option"
+	// "net/http"
+	// "github.com/go-fuego/fuego/option"
 	"github.com/tigawanna/cloud-mwitu/internal/configs"
 	"github.com/tigawanna/cloud-mwitu/internal/controllers"
 	"github.com/tigawanna/cloud-mwitu/internal/middleware"
 	"github.com/tigawanna/cloud-mwitu/internal/services"
-	"net/http"
 )
 
-type NoContent struct {
-	Empty string `json:"-"`
-}
+// type NoContent struct {
+// 	Result string `json:"result"`
+// 	Error  string `json:"error"`
+// }
 
 func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 	options = append(options,
@@ -29,8 +30,7 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 			middleware.CorsMiddleware,
 		),
 		fuego.WithRouteOptions(
-			option.AddResponse(http.StatusNoContent, "No Content",
-				fuego.Response{Type: NoContent{}}),
+			// option.AddResponse(http.StatusNoContent, "No Content",fuego.Response{Type: NoContent{}}),
 		))
 	s := fuego.NewServer(options...)
 
@@ -45,6 +45,10 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 		SystemDFileService: services.NewSystemDFileService(),
 	}
 	systemDResource.Routes(s)
+
+	// fuego.Get(s, "/", func(c fuego.ContextNoBody) (NoContent, error) {
+	// 	return NoContent{}, nil
+	// })
 
 	return s
 }

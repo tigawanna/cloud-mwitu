@@ -6,7 +6,7 @@ interface AllDaisyUiThemesProps {
 export function AllDaisyUiThemes({compact}: AllDaisyUiThemesProps) {
   const allDaisyUiThems = [
     "forest",
-    "cupacake",
+    "cupcake",
     "emerald",
     "corporate",
     "synthwave",

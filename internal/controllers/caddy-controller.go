@@ -9,9 +9,9 @@ import (
 
 // default pagination options
 var optionPagination = option.Group(
-	// option.QueryInt("perPage", "Number of items per page", param.Default(24)),
-	// option.QueryInt("page", "Page number", param.Default(1), param.Example("1st page", 1), param.Example("42nd page", 42), param.Example("100th page", 100)),
-	option.ResponseHeader("Content-Range", "Total number of caddy configs", param.StatusCodes(200, 206), param.Example("42 caddy configs", "0-10/42")),
+	option.ResponseHeader("Content-Range", "Total number of caddy configs", 
+	param.StatusCodes(200), 
+	param.Example("42 caddy configs", "0-10/42")),
 )
 
 type CaddyFileResources struct {

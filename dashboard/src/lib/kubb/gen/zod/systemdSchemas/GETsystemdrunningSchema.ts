@@ -2,8 +2,6 @@ import type {
   GETSystemdRunningQueryParams,
   GETSystemdRunningHeaderParams,
   GETSystemdRunning200,
-  GETSystemdRunning204,
-  GETSystemdRunning206,
   GETSystemdRunning400,
   GETSystemdRunning500,
   GETSystemdRunningError,
@@ -11,7 +9,6 @@ import type {
 } from "../../types/'systemdController/GETSystemdRunning.ts"
 import type { ToZod } from '@kubb/plugin-zod/utils'
 import { HTTPErrorSchema } from '../HTTPErrorSchema.ts'
-import { noContentSchema } from '../noContentSchema.ts'
 import { runningSystemDServiceSchema } from '../runningSystemDServiceSchema.ts'
 import { z } from 'zod'
 
@@ -24,7 +21,6 @@ export const GETSystemdRunningQueryParamsSchema = z
 
 export const GETSystemdRunningHeaderParamsSchema = z
   .object({
-    'X-Header': z.string().describe('header description').optional(),
     Accept: z.string().optional(),
   })
   .optional() as unknown as ToZod<GETSystemdRunningHeaderParams>
@@ -33,16 +29,6 @@ export const GETSystemdRunningHeaderParamsSchema = z
  * @description OK
  */
 export const GETSystemdRunning200Schema = z.array(z.lazy(() => runningSystemDServiceSchema)) as unknown as ToZod<GETSystemdRunning200>
-
-/**
- * @description No Content
- */
-export const GETSystemdRunning204Schema = z.lazy(() => noContentSchema) as unknown as ToZod<GETSystemdRunning204>
-
-/**
- * @description OK
- */
-export const GETSystemdRunning206Schema = z.unknown() as unknown as ToZod<GETSystemdRunning206>
 
 /**
  * @description Bad Request _(validation or deserialization error)_
@@ -56,8 +42,4 @@ export const GETSystemdRunning500Schema = z.lazy(() => HTTPErrorSchema) as unkno
 
 export const GETSystemdRunningErrorSchema = z.unknown() as unknown as ToZod<GETSystemdRunningError>
 
-export const GETSystemdRunningQueryResponseSchema = z.union([
-  z.lazy(() => GETSystemdRunning200Schema),
-  z.lazy(() => GETSystemdRunning204Schema),
-  z.lazy(() => GETSystemdRunning206Schema),
-]) as unknown as ToZod<GETSystemdRunningQueryResponse>
+export const GETSystemdRunningQueryResponseSchema = z.lazy(() => GETSystemdRunning200Schema) as unknown as ToZod<GETSystemdRunningQueryResponse>

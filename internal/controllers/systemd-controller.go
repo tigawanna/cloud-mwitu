@@ -26,13 +26,11 @@ func (rs SystemDFileResources) Routes(s *fuego.Server) {
 	systemDGroup := fuego.Group(s, "/systemd")
 
 	fuego.Get(systemDGroup, "/", rs.getSystemDFileServices,
-		optionPagination,
-		option.Query("name", "Filter by name", param.Example("systemd domain name", "caddy"), param.Nullable()),
+		option.Query("name", "Filter by name", param.Example("systemd domain name", "apache"), param.Nullable()),
 		option.Query("libDir", "look under /lib or /etc", param.Example("systemd directory to look under", "/lib"), param.Nullable()),
 		option.Description("List all SystemDFile services and filter by name"),
 	)
 	fuego.Get(systemDGroup, "/running", rs.getRunningSystemDFileServices,
-		optionPagination,
 		option.Query("name", "Filter by name", param.Example("systemd domain name", "postgres"), param.Nullable()),
 		option.Query("libDir", "look under /lib or /etc", param.Example("systemd directory to look under", "/lib"), param.Nullable()),
 		option.Description("List all Running SystemDFile services and filter by name"),

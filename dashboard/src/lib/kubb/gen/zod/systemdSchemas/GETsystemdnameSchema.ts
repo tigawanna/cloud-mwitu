@@ -3,7 +3,6 @@ import type {
   GETSystemdNameQueryParams,
   GETSystemdNameHeaderParams,
   GETSystemdName200,
-  GETSystemdName204,
   GETSystemdName400,
   GETSystemdName500,
   GETSystemdNameError,
@@ -11,7 +10,6 @@ import type {
 } from "../../types/'systemdController/GETSystemdName.ts"
 import type { ToZod } from '@kubb/plugin-zod/utils'
 import { HTTPErrorSchema } from '../HTTPErrorSchema.ts'
-import { noContentSchema } from '../noContentSchema.ts'
 import { systemDServiceSchema } from '../systemDServiceSchema.ts'
 import { z } from 'zod'
 
@@ -27,7 +25,6 @@ export const GETSystemdNameQueryParamsSchema = z
 
 export const GETSystemdNameHeaderParamsSchema = z
   .object({
-    'X-Header': z.string().describe('header description').optional(),
     Accept: z.string().optional(),
   })
   .optional() as unknown as ToZod<GETSystemdNameHeaderParams>
@@ -36,11 +33,6 @@ export const GETSystemdNameHeaderParamsSchema = z
  * @description OK
  */
 export const GETSystemdName200Schema = z.lazy(() => systemDServiceSchema) as unknown as ToZod<GETSystemdName200>
-
-/**
- * @description No Content
- */
-export const GETSystemdName204Schema = z.lazy(() => noContentSchema) as unknown as ToZod<GETSystemdName204>
 
 /**
  * @description Bad Request _(validation or deserialization error)_
@@ -54,7 +46,4 @@ export const GETSystemdName500Schema = z.lazy(() => HTTPErrorSchema) as unknown 
 
 export const GETSystemdNameErrorSchema = z.unknown() as unknown as ToZod<GETSystemdNameError>
 
-export const GETSystemdNameQueryResponseSchema = z.union([
-  z.lazy(() => GETSystemdName200Schema),
-  z.lazy(() => GETSystemdName204Schema),
-]) as unknown as ToZod<GETSystemdNameQueryResponse>
+export const GETSystemdNameQueryResponseSchema = z.lazy(() => GETSystemdName200Schema) as unknown as ToZod<GETSystemdNameQueryResponse>

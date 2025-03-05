@@ -25,5 +25,6 @@ export async function GETcaddyClient(
     ...requestConfig,
     headers: { ...headers, ...requestConfig.headers },
   })
+  
   return res
 }

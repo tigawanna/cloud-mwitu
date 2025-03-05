@@ -1,1 +1,1 @@
-{"description":"NoContent schema","x-readme-ref-name":"NoContent"}
+{"description":"NoContent schema","properties":{"error":{"type":"string"},"result":{"type":"string"}},"type":"object","x-readme-ref-name":"NoContent"}

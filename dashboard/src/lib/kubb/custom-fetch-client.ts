@@ -27,14 +27,15 @@ export type RequestConfig<TData = unknown> = {
 export type ResponseErrorConfig<TError = unknown> = TError;
 
 export interface BaseBadResponse {
+  type:"error";
   result: null;
   error: ErrorSchema;
 }
-export interface BaseGoodResponse {
-  result: Record<string, any>;
-  error?: unknown | undefined;
-}
-
+// export interface BaseGoodResponse {
+//   result: Record<string, any>;
+//   error?: unknown | undefined;
+// }
+type BaseGoodResponse = unknown
 export type SuccessResponse<TData extends BaseGoodResponse> = {
   type: "success";
   data: TData;
@@ -83,6 +84,7 @@ export async function fetchClient<
         type: "error",
         data: {
           result: null,
+          type: "error",
           error: await response
             .json()
             .then((res) => res.error)
@@ -108,6 +110,7 @@ export async function fetchClient<
     return {
       type: "error",
       data: {
+        type: "error",
         result: null,
         error: error as ErrorSchema,
       },
