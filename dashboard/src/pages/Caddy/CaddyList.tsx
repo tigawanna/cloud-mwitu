@@ -12,7 +12,7 @@ export function CaddyList({}: CaddyListProps) {
     queryFn: fetchStatistics,
     suspense: true,
   }));
-
+console.log("=== data ==",query.data)
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <Suspense fallback={<CardsListSuspenseFallback />}>

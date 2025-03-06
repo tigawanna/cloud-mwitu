@@ -78,7 +78,7 @@ export async function fetchClient<
       headers: config.headers,
       credentials: "include",
     });
-
+    // console.log("=== response ===",response)
     if (!response.ok) {
       return {
         type: "error",

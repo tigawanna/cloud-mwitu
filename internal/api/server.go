@@ -36,10 +36,10 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 			),
 		),
 		fuego.WithGlobalMiddlewares(
-			middleware.LogMiddlewereAccess,
-			middleware.CorsMiddleware,
-			// Create the auth middleware with the auth service
 			middleware.AuthMiddleware(authService),
+			middleware.CorsMiddleware,
+			middleware.LogMiddlewereAccess,
+			// Create the auth middleware with the auth service
 		),
 		fuego.WithRouteOptions(
 			// option.AddResponse(http.StatusNoContent, "No Content",fuego.Response{Type: NoContent{}}),

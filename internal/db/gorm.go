@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/tigawanna/cloud-mwitu/internal/configs"
-	"github.com/tigawanna/cloud-mwitu/internal/models"
+	// "github.com/tigawanna/cloud-mwitu/internal/models"
 	"github.com/tigawanna/cloud-mwitu/internal/services"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -124,17 +124,17 @@ func InitDB() *gorm.DB {
     database := Initialize(config)
     
     // Register models and run migrations
-    err := AutoMigrate(database, 
-        &models.User{},
-        &models.Session{},
-        &models.CaddyFileHistory{},
-        &models.SystemDFileHistory{},
-        // Add other models here
-    )
+    // err := AutoMigrate(database, 
+    //     &models.User{},
+    //     &models.Session{},
+    //     &models.CaddyFileHistory{},
+    //     &models.SystemDFileHistory{},
+    //     // Add other models here
+    // )
     
-    if err != nil {
-        log.Fatalf("Database migration failed: %v", err)
-    }
+    // if err != nil {
+    //     log.Fatalf("Database migration failed: %v", err)
+    // }
     
     // Start a background task to clean expired sessions
     go cleanExpiredSessions(database)
