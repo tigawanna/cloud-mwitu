@@ -160,14 +160,15 @@ func (c SystemdServiceConfig) ToString() (string, error) {
 	return sb.String(), nil
 }
 
-func (s *SystemDFileServiceImpl) UpdateSystemDFile(path string, newService SystemdServiceConfig, libDir bool) (SystemdServiceConfig, error) {
+func (s *SystemDFileServiceImpl) UpdateSystemDFile(path string, newService string, libDir bool) (string, error) {
 
 	// Expand home directory if path starts with ~
 	if strings.HasPrefix(path, "~/") {
 		homeDir, err := os.UserHomeDir()
-		if err == nil {
-			path = filepath.Join(homeDir, path[2:])
+		if err != nil {
+			return newService, fmt.Errorf("failed to get home directory: %w", err)
 		}
+		path = filepath.Join(homeDir, path[2:])
 	}
 
 	// Ensure base directory is absolute
@@ -180,13 +181,8 @@ func (s *SystemDFileServiceImpl) UpdateSystemDFile(path string, newService Syste
 		path = filepath.Join("/etc/systemd/system", path)
 	}
 
-	newServiceString,err := newService.ToString()
-
-	if err != nil {
-		return newService, fmt.Errorf("failed to write service file: %w", err)
-	}
 	// Write the new service file
-	err = SaveFile(path, newServiceString)
+	err := SaveFile(path, newService)
 	if err != nil {
 		return newService, fmt.Errorf("failed to write service file: %w", err)
 	}

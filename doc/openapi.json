@@ -99,7 +99,9 @@
 			"RequestUpdateSystemDModel": {
 				"description": "RequestUpdateSystemDModel schema",
 				"properties": {
-					"content": {},
+					"content": {
+						"type": "string"
+					},
 					"libDir": {
 						"type": "boolean"
 					},
@@ -148,9 +150,6 @@
 				},
 				"type": "object"
 			},
-			"SystemdServiceConfig": {
-				"description": "SystemdServiceConfig schema"
-			},
 			"UpdateCaddyResponse": {
 				"description": "UpdateCaddyResponse schema",
 				"properties": {
@@ -174,6 +173,10 @@
 					}
 				},
 				"type": "object"
+			},
+			"string": {
+				"description": "string schema",
+				"type": "string"
 			},
 			"unknown-interface": {
 				"description": "unknown-interface schema"
@@ -573,12 +576,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemdServiceConfig"
+									"$ref": "#/components/schemas/string"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/SystemdServiceConfig"
+									"$ref": "#/components/schemas/string"
 								}
 							}
 						},

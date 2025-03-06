@@ -91,44 +91,46 @@ func (rs SystemDFileResources) getSystemDFileServiceByName(c fuego.ContextNoBody
 
 type RequestUpdateSystemDModel struct {
 	Name    string `json:"name"`
-	Content services.SystemdServiceConfig `json:"content"`
+	Content string `json:"content"`
 	LibDir bool `json:"libDir"`
 }
 
-func (rs SystemDFileResources) updateSystemD(c fuego.ContextWithBody[RequestUpdateSystemDModel]) (services.SystemdServiceConfig, error) {
+func (rs SystemDFileResources) updateSystemD(c fuego.ContextWithBody[RequestUpdateSystemDModel]) (string, error) {
 	body, err := c.Body()
-	updateSystemD := services.SystemdServiceConfig{}
+
 	if err != nil {
-		return updateSystemD, fuego.BadRequestError{
+		return "", fuego.BadRequestError{
 			Title:  "Unexpected data",
 			Detail: "The data recieved was unexpected",
 			Err:    err,
 		}
 	}
 	if body.Name == "" {
-		return updateSystemD, fuego.BadRequestError{
+		return "", fuego.BadRequestError{
 			Title:  "Unexpected data",
 			Detail: "The body name and content are required",
-			Err:    err,
+			Err:    fmt.Errorf("body name is required"),
+		}
+	}
+	if(body.Content == ""){
+		return "", fuego.BadRequestError{
+			Title:  "Unexpected data",			
+			Detail: "The body content is required",	
+			Err:    fmt.Errorf("body content is required"),
 		}
 	}
 	caddies, err := rs.SystemDFileService.UpdateSystemDFile(body.Name, body.Content, body.LibDir)
 	if err != nil {
-		return updateSystemD, fuego.BadRequestError{
+		return "", fuego.BadRequestError{
 			Detail: "Issue looking up systemd services",
 			Err:    err,
 		}
 	}
-	contentString,err := body.Content.ToString()
+
+
+	err = services.SaveFile("/etc/systemd/SystemDFile", body.Content)
 	if err != nil {
-		return updateSystemD, fuego.BadRequestError{
-			Detail: "Issue stringifying systemd services file",
-			Err:    err,
-		}
-	}
-	err = services.SaveFile("/etc/systemd/SystemDFile", contentString)
-	if err != nil {
-		return updateSystemD, fuego.BadRequestError{
+		return "", fuego.BadRequestError{
 			Detail: "Issue saving systemd services file",
 			Err:    err,
 		}

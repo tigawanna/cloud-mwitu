@@ -5,6 +5,15 @@ go 1.23.6
 require github.com/go-fuego/fuego v0.18.4
 
 require (
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
+	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
+	github.com/uptrace/bun v1.2.11 // indirect
+	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
+	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
+)
+
+require (
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/getkin/kin-openapi v0.129.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
