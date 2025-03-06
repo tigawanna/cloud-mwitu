@@ -6,6 +6,7 @@ import (
 	// "github.com/go-fuego/fuego/option"
 	"github.com/tigawanna/cloud-mwitu/internal/configs"
 	"github.com/tigawanna/cloud-mwitu/internal/controllers"
+	"github.com/tigawanna/cloud-mwitu/internal/db"
 	"github.com/tigawanna/cloud-mwitu/internal/middleware"
 	"github.com/tigawanna/cloud-mwitu/internal/services"
 )
@@ -16,6 +17,15 @@ import (
 // }
 
 func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
+
+  // Initialize database
+    database := db.InitDB()
+    
+    // Initialize services that require database access
+    authService := services.NewAuthService(database, nil)
+    
+	
+	
 	options = append(options,
 		fuego.WithAddr("localhost:"+configs.GetEnv().Port),
 		fuego.WithEngineOptions(
@@ -28,6 +38,8 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 		fuego.WithGlobalMiddlewares(
 			middleware.LogMiddlewereAccess,
 			middleware.CorsMiddleware,
+			// Create the auth middleware with the auth service
+			middleware.AuthMiddleware(authService),
 		),
 		fuego.WithRouteOptions(
 			// option.AddResponse(http.StatusNoContent, "No Content",fuego.Response{Type: NoContent{}}),
@@ -45,6 +57,14 @@ func NewApiServer(options ...func(*fuego.Server)) *fuego.Server {
 		SystemDFileService: services.NewSystemDFileService(),
 	}
 	systemDResource.Routes(s)
+
+	// Use default session config
+	authController := controller.AuthResources{
+    AuthService: authService,
+	}
+
+	// Register auth routes
+	authController.Routes(s)
 
 	// fuego.Get(s, "/", func(c fuego.ContextNoBody) (NoContent, error) {
 	// 	return NoContent{}, nil
